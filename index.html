@@ -3,58 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página oficial de Alen Jeynrod, pianista y compositor de México. Escucha su música en Spotify, Apple Music, YouTube Music, Deezer, Tidal y Amazon Music. Redes sociales de Alen Jeynrod: Instagram, TikTok y YouTube.">
+    <meta name="keywords" content="Alen Jeynrod, pianista, compositor, música, Spotify, Apple Music, YouTube Music, Deezer, Tidal, Amazon Music, DREAMING, Her, A reason more to smile, Guiding light, Between brothers, Solitude, Am I dreaming?, Instagram, TikTok, YouTube, Dreaming, EP, México, EP DREAMING">
+    <meta property="og:title" content="Landing Page de Alen Jeynrod">
+    <meta property="og:description" content="Página oficial de Alen Jeynrod, pianista y compositor de México. Escucha su música en Spotify, Apple Music, YouTube Music, Deezer, Tidal y Amazon Music.">
+    <meta property="og:image" content="img/profile.jpg">
+    <meta property="og:type" content="website">
     <link rel="stylesheet" href="src/output.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <title>Landing Page</title>
+    <link rel="icon" href="ico/iconAlen.ico" type="image/x-icon">
+    <title>Alen Jeynrod</title>
+    <style>
+        .background-image {
+            background-image: url('img/CoverPc.png');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    
+        @media (max-width: 640px) {
+            .background-image {
+                background-image: url('img/CoverMobile.png');
+            }
+        }
+        ::selection {
+            background-color: #4B5563;
+            color: #FFFFFF;
+        }
+    </style>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body class="font-sans bg-black sm:px-18 md:px-16 lg:px-14">
-    <div class="background-image h-screen w-screen fixed z-[-1] blur-md"></div>
-    <main class="flex flex-col items-center justify-center gap-5">
+    <div class="background-image h-screen w-screen fixed z-[-1] blur-md bg-cover bg-center"></div>
+    <main class="flex flex-col items-center justify-center gap-6">
         <section class="flex flex-col items-center justify-center bg-gray-900/15 rounded-xl shadow-lg shadow-gray-400/15 p-6 gap-8 w-auto my-8">
             <section class="flex flex-col items-center justify-center gap-2">
-                <img src="img/Imagen de WhatsApp 2025-01-20 a las 21.23.48_25cf9bc2.jpg" alt="Alen Jeynrod" class="w-24 rounded-full">
-                <h2 class="text-xl text-white font-bold">Alen Jeynrod</h2>
-                <h3 class="text-gray-400 font-medium">🎹 Pianista y compositor de México.<br>¡Espero que disfrutes mi música! 🎶</h3>
+                <img src="img/profile.jpg" alt="Foto de perfil de Alen Jeynrod" class="w-24 rounded-full" data-aos="zoom-in">
+                <h1 class="text-xl text-white font-bold" data-aos="zoom-in">Alen Jeynrod</h1>
+                <h2 class="text-gray-300 font-medium" data-aos="zoom-in">🎹 Pianista y compositor de México.<br>¡Espero que disfrutes mi música! 🎹</h2>
             </section>
-            <div>
-                <img src="img/Cover.jpg" alt="Portada de DREAMING" class="w-[325px] md:w-[500px] lg:w-[600px] shadow-lg shadow-gray-800 rounded-xl hover:scale-[102%] transition-all duration-200">
+            <div class="relative group" data-aos="fade-down">
+                <img src="img/Cover.jpg" alt="Portada del EP DREAMING de Alen Jeynrod" class="w-[325px] md:w-[500px] lg:w-[600px] shadow-lg shadow-gray-800 rounded-xl hover:scale-[102%] transition-all duration-400">
+                <div class="absolute inset-0 bg-black/75 flex items-center justify-center opacity-0 rounded-xl group-hover:opacity-100 transition-opacity duration-600 ease-in-out">
+                    <ul class="text-white text-center space-y-2 text-md">
+                        <h3 class="font-black "> - Tracklist - </h3>
+                        <li class="hover:text-gray-300 transition-colors duration-200 font-thin ">Her</li>
+                        <li class="hover:text-gray-300 transition-colors duration-200 font-thin ">A reason more to smile</li>
+                        <li class="hover:text-gray-300 transition-colors duration-200 font-thin ">Guiding light</li>
+                        <li class="hover:text-gray-300 transition-colors duration-200 font-thin ">Between brothers</li>
+                        <li class="hover:text-gray-300 transition-colors duration-200 font-thin ">Solitude</li>
+                        <li class="hover:text-gray-300 transition-colors duration-200 font-thin ">Am I dreaming?</li>
+                    </ul>
+                </div>
             </div>
             <div class="flex flex-col items-center justify-center gap-5 text-white link font-medium [section>a]:shadow-lg [section>a]:shadow-white">
-                <section>
-                    <a href="https://open.spotify.com/intl-es/artist/3kzgeiwDoZralvEkk78p5U?si=_auJhaiTRVO9zVjCfMjKKg" class="bg-green-400/40 p-2 w-[325px] md:w-[500px] lg:w-[600px] flex items-center rounded-md text-lg hover:bg-green-400/55 hover:scale-105 transition-all duration-200">
-                        <img src="ico/Spotify_icon-icons.com_66783.svg" alt="Icono de spotify" class="w-8">
+                <section data-aos="fade-up-right">
+                    <a href="https://open.spotify.com/intl-es/artist/3kzgeiwDoZralvEkk78p5U?si=_auJhaiTRVO9zVjCfMjKKg" class="bg-green-400/40 p-2 w-[325px] md:w-[500px] lg:w-[600px] flex items-center rounded-md text-lg hover:bg-green-400/55 hover:scale-105 transition-all duration-200" >
+                        <img src="ico/Spotify_icon-icons.com_66783.svg" alt="Icono de Spotify" class="w-8">
                         <span class="flex-1 text-center">Spotify</span>
                     </a>
                 </section>
-                <section>
+                <section data-aos="fade-up-left">
                     <a href="https://music.apple.com/mx/artist/alen-jeynrod/1789239974" class="bg-red-400/40 p-2 w-[325px] md:w-[500px] lg:w-[600px] flex items-center rounded-md text-lg hover:bg-red-400/55 hover:scale-105 transition-all duration-200">
-                        <img src="ico/apple-music-svgrepo-com.svg" alt="Icono de apple music" class="w-8">
+                        <img src="ico/apple-music-svgrepo-com.svg" alt="Icono de Apple Music" class="w-8">
                         <span class="flex-1 text-center">Apple Music</span>
                     </a>
                 </section>
-                <section>
+                <section data-aos="fade-up-right">
                     <a href="https://music.youtube.com/watch?v=hUezxoi7mAA&si=wEvKTyerxF23dBOw" class="bg-rose-500/40 p-2 w-[325px] md:w-[500px] lg:w-[600px] flex items-center rounded-md text-lg hover:bg-rose-500/55 hover:scale-105 transition-all duration-200">
-                        <img src="ico/Youtube_Music_icon.svg" alt="Icono de youtube music" class="w-8">
-                        <span class="flex-1 text-center">Youtube Music</span>
+                        <img src="ico/Youtube_Music_icon.svg" alt="Icono de YouTube Music" class="w-8">
+                        <span class="flex-1 text-center">YouTube Music</span>
                     </a> 
                 </section>
-                <section>
+                <section data-aos="fade-up-left">
                     <a href="https://tidal.com/browse/artist/53190928" class="bg-blue-800/40 p-2 w-[325px] md:w-[500px] lg:w-[600px] flex items-center rounded-md text-lg hover:bg-blue-800/55 hover:scale-105 transition-all duration-200">
-                        <img src="ico/4691505_tidal_icon.svg" alt="Icono de tidal" class="w-8">
+                        <img src="ico/4691505_tidal_icon.svg" alt="Icono de Tidal" class="w-8">
                         <span class="flex-1 text-center">Deezer</span>
                     </a>
                 </section>
-                <section>
+                <section data-aos="fade-up-right">
                     <a href="https://deezer.page.link/dyLxMtJCWa7MFvfA9" class="bg-blue-400/40 p-2 w-[325px] md:w-[500px] lg:w-[600px] flex items-center rounded-md text-lg hover:bg-blue-400/55 hover:scale-105 transition-all duration-200">
-                        <img src="ico/deezer.svg" alt="Icono de deezer" class="w-8">
+                        <img src="ico/deezer.svg" alt="Icono de Deezer" class="w-8">
                         <span class="flex-1 text-center">Tidal</span>
                     </a>
                 </section>
-                <section>
+                <section data-aos="fade-up-left">
                     <a href="https://music.amazon.com.mx/artists/B0DSQB76ZC/alen-jeynrod?marketplaceId=A1AM78C64UM0Y8&musicTerritory=MX&ref=dm_sh_5DomLqsVDzcSw1fuit41xhAf2" class="bg-yellow-400/40 p-2 w-[325px] md:w-[500px] lg:w-[600px] flex items-center rounded-md text-lg hover:bg-yellow-400/55 hover:scale-105 transition-all duration-200">
-                        <img src="ico/icons8-musica-amazonas.svg" alt="Icono de amazon music" class="w-8">
+                        <img src="ico/icons8-musica-amazonas.svg" alt="Icono de Amazon Music" class="w-8">
                         <span class="flex-1 text-center">Amazon Music</span>
                     </a>
                 </section>
@@ -62,24 +105,27 @@
             <div class="flex items-center justify-center gap-8">
                 <span>
                     <a href="https://www.instagram.com/alenjeynrod">
-                        <img src="ico/IGblanco.svg" alt="Icono de instagram" class="w-6 hover:scale-110 transition-all duration-200">
+                        <img src="ico/IGblanco.svg" alt="Icono de Instagram" class="w-6 hover:scale-110 transition-all duration-200">
                     </a>
                 </span>
                 <span>
                     <a href="https://www.tiktok.com/@alenjeynrod">
-                        <img src="ico/TikTokblanco.svg" alt="Icono de tiktok" class="w-6 hover:scale-110 transition-all duration-200">
+                        <img src="ico/TikTokblanco.svg" alt="Icono de TikTok" class="w-6 hover:scale-110 transition-all duration-200">
                     </a>
                 </span>
                 <span>
                     <a href="https://www.youtube.com/@alenjeynrod">
-                        <img src="ico/YoutubeBlanco.svg" alt="Icono de youtube" class="w-8 hover:scale-110 transition-all duration-200">
+                        <img src="ico/YoutubeBlanco.svg" alt="Icono de YouTube" class="w-8 hover:scale-110 transition-all duration-200">
                     </a>
                 </span>
             </div>
         </section>
     </main>
-    <footer>
-
-    </footer>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+        });
+    </script>
 </body>
 </html>
