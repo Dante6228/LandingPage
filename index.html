@@ -17,10 +17,11 @@
     <title>Alen Jeynrod</title>
     <style>
         .background-image {
-            background-image: url('img/CoverMobile.png');
+            background-image: url('img/Profile.jpg');
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            opacity: 0.4;
         }
     
         ::selection {
@@ -32,7 +33,7 @@
 </head>
 <body class="font-sans bg-black sm:px-18 md:px-16 lg:px-14">
     <div class="background-image h-screen w-screen fixed z-[-1] blur-md bg-cover bg-center"></div>
-    <main class="flex flex-col items-center justify-center gap-6">
+    <main class="flex flex-col items-center justify-center">
         <section class="flex flex-col items-center justify-center bg-gray-900/15 rounded-xl shadow-lg shadow-gray-400/15 p-6 gap-8 w-auto my-8">
             <section class="flex flex-col items-center justify-center gap-2">
                 <img src="img/profile.jpg" alt="Foto de perfil de Alen Jeynrod" class="w-24 rounded-full" data-aos="zoom-in">
@@ -40,6 +41,7 @@
                 <h2 class="text-gray-300 font-medium" data-aos="zoom-in">🎹 Pianista y compositor de México.<br>¡Espero que disfrutes mi música! 🎹</h2>
             </section>
             <div class="relative group" data-aos="fade-down">
+                <h2 class="text-white font-bold text-center text-3xl mb-5">¡Escucha mi nuevo EP!</h2>
                 <img src="img/Cover.jpg" alt="Portada del EP DREAMING de Alen Jeynrod" class="w-[325px] md:w-[500px] lg:w-[600px] shadow-lg shadow-gray-800 rounded-xl hover:scale-[102%] transition-all duration-400">
                 <div class="absolute inset-0 bg-black/75 flex items-center justify-center opacity-0 rounded-xl group-hover:opacity-100 transition-opacity duration-600 ease-in-out">
                     <ul class="text-white text-center space-y-2 text-md">
@@ -91,29 +93,39 @@
                     </a>
                 </section>
             </div>
-            <div class="flex items-center justify-center gap-8">
-                <span>
-                    <a href="https://www.instagram.com/alenjeynrod">
-                        <img src="ico/IGblanco.svg" alt="Icono de Instagram" class="w-6 hover:scale-110 transition-all duration-200">
-                    </a>
-                </span>
-                <span>
-                    <a href="https://www.tiktok.com/@alenjeynrod">
-                        <img src="ico/TikTokblanco.svg" alt="Icono de TikTok" class="w-6 hover:scale-110 transition-all duration-200">
-                    </a>
-                </span>
-                <span>
-                    <a href="https://www.youtube.com/@alenjeynrod">
-                        <img src="ico/YoutubeBlanco.svg" alt="Icono de YouTube" class="w-8 hover:scale-110 transition-all duration-200">
-                    </a>
-                </span>
+            <div class="flex flex-col items-center justify-center gap-8">
+                <section class="flex flex-col items-center justify-center bg-gray-900/15 rounded-xl shadow-lg shadow-gray-400/15 p-6 gap-6  w-[325px] md:w-[500px] lg:w-[600px]" data-aos="zoom-out-up">
+                    <h2 class="text-2xl text-white font-bold">Sobre mí</h2>
+                    <p class="text-gray-300 text-center max-w-2xl">
+                        Soy Alen Jeynrod (Dante), pianista y compositor mexicano. Mi viaje musical comenzó desde pequeño con la batería, y aunque probé con la guitarra, no era mi fuerte. En 2020, descubrí el teclado tocando mis canciones favoritas, y fue entonces cuando el piano se convirtió en mi pasión. Desde entonces, he dedicado mi tiempo a explorar y perfeccionar este instrumento.
+                        <br><br>
+                        Mi estilo fusiona elementos clásicos con influencias modernas, creando una experiencia musical única y emotiva. Espero que mi música te inspire y te transporte, tal como lo hace para mí al componerla.
+                    </p>
+                    <section class="flex items-center justify-center gap-8">
+                        <span>
+                            <a href="https://www.instagram.com/alenjeynrod">
+                                <img src="ico/IGblanco.svg" alt="Icono de Instagram" class="w-6 hover:scale-125 transition-all duration-200">
+                            </a>
+                        </span>
+                        <span>
+                            <a href="https://www.tiktok.com/@alenjeynrod">
+                                <img src="ico/TikTokblanco.svg" alt="Icono de TikTok" class="w-6 hover:scale-125 transition-all duration-200">
+                            </a>
+                        </span>
+                        <span>
+                            <a href="https://www.youtube.com/@alenjeynrod">
+                                <img src="ico/YoutubeBlanco.svg" alt="Icono de YouTube" class="w-8 hover:scale-125 transition-all duration-200">
+                            </a>
+                        </span>
+                    </section>
+                </section>
             </div>
         </section>
     </main>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
-            duration: 800,
+            duration: 1000,
         });
     </script>
 </body>
