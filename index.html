@@ -21,9 +21,9 @@
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-            opacity: 0.4;
+            opacity: 0.25;
         }
-    
+
         ::selection {
             background-color: #4B5563;
             color: #FFFFFF;
@@ -32,7 +32,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body class="font-sans bg-black sm:px-18 md:px-16 lg:px-14">
-    <div class="background-image h-screen w-screen fixed z-[-1] blur-md bg-cover bg-center"></div>
+    <div class="background-image h-screen w-screen fixed z-[-1] blur-xl bg-cover bg-center"></div>
     <main class="flex flex-col items-center justify-center">
         <section class="flex flex-col items-center justify-center bg-gray-900/15 rounded-xl shadow-lg shadow-gray-400/15 p-6 gap-8 w-auto my-8">
             <section class="flex flex-col items-center justify-center gap-2">
@@ -40,7 +40,7 @@
                 <h1 class="text-xl text-white font-bold" data-aos="zoom-in">Alen Jeynrod</h1>
                 <h2 class="text-gray-300 font-medium" data-aos="zoom-in">🎹 Pianista y compositor de México.<br>¡Espero que disfrutes mi música! 🎹</h2>
             </section>
-            <h2 class="text-white font-bold text-center text-3xl">¡Escucha mi nuevo EP!</h2>
+            <h2 class="text-white font-bold text-center text-3xl" data-aos="zoom-out">¡Escucha mi nuevo EP!</h2>
             <div class="relative group" data-aos="fade-down">
                 <img src="img/Cover.jpg" alt="Portada del EP DREAMING de Alen Jeynrod" class="w-[325px] md:w-[500px] lg:w-[600px] shadow-lg shadow-gray-800 rounded-xl hover:scale-[102%] transition-all duration-400">
                 <div class="absolute inset-0 bg-black/75 flex items-center justify-center opacity-0 rounded-xl group-hover:opacity-100 transition-opacity duration-600 ease-in-out">
@@ -125,7 +125,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
-            duration: 1000,
+            duration: 700,
         });
     </script>
 </body>
