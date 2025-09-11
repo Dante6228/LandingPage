@@ -40,31 +40,7 @@
             color: #FFFFFF;
         }
     </style>
-    <!-- JSON-LD: VideoObject -->
-    <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "VideoObject",
-  "name": "Her — Official Video",
-  "description": "Video oficial de 'Her' por Alen Jeynrod.",
-  "thumbnailUrl": ["https://i.ytimg.com/vi/VIDEO_ID_AQUI/maxresdefault.jpg"],
-  "uploadDate": "2025-08-23T19:00:00-06:00",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Alen Jeynrod"
-  },
-  "contentUrl": "https://www.youtube.com/watch?v=VIDEO_ID_AQUI",
-  "embedUrl": "https://www.youtube-nocookie.com/embed/VIDEO_ID_AQUI"
-}
-</script>
-
-    <!-- Open Graph para la premiere -->
-    <meta property="og:video:url" content="https://www.youtube.com/watch?v=VIDEO_ID_AQUI">
-    <meta property="og:video:secure_url" content="https://www.youtube.com/watch?v=VIDEO_ID_AQUI">
-    <meta property="og:video:type" content="text/html">
-    <meta property="og:video:width" content="1280">
-    <meta property="og:video:height" content="720">
-
+    <script src="js.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
@@ -83,60 +59,12 @@
                     que disfrutes mi música! 🎹</h2>
             </section>
 
-            <!-- PREMIERE “HER” -->
-            <section
-                class="w-full max-w-[1200px] px-4 py-8 bg-gray-900/20 border border-white/10 rounded-xl shadow-md shadow-gray-400/10"
-                data-aos="fade-up" id="premiere-her" data-premiere-iso="2025-08-22T18:00:00-06:00"
-                data-video-id="raPmOrcnTxM">
-
-                <header class="flex flex-col items-center text-center gap-2 mb-6">
-                    <span class="text-sm tracking-widest text-gray-300 uppercase">Premiere</span>
-                    <h2 class="text-2xl md:text-3xl text-white font-bold">Alen Jeynrod - Her (Official Music Video)</h2>
-                    <p class="text-gray-300 max-w-2xl text-center">
-                        ¡Acompáñame en el estreno del video oficial!😇
-                    </p>
-                </header>
-
-                <!-- Countdown -->
-                <div class="flex flex-col items-center gap-2 mb-6">
-                    <div class="text-gray-300">Empieza en</div>
-                    <div id="her-countdown"
-                        class="text-white text-3xl md:text-4xl font-bold tracking-wider tabular-nums">
-                        00d : 00h : 00m : 00s
-                    </div>
-                    <div id="her-countdown-date" class="text-gray-400 text-sm text-center"></div>
-                </div>
-
-                <!-- Botones -->
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
-                    <!-- Ver en YouTube (watch page muestra el botón de “Set reminder”) -->
-                    <a id="her-watch-link" href="https://youtu.be/raPmOrcnTxM" target="_blank" rel="noopener"
-                        class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-white text-gray-900 font-semibold hover:bg-white/90 transition">
-                        Ver premiere en YouTube
-                    </a>
-
-                </div>
-
-                <!-- Video responsive (16:9) -->
-                <div
-                    class="w-full max-w-4xl mx-auto rounded-xl overflow-hidden shadow-lg shadow-gray-700/30 border border-white/10">
-                    <div class="relative pt-[56.25%]">
-                        <iframe id="her-embed" class="absolute inset-0 w-full h-full" src="https://www.youtube.com/embed/raPmOrcnTxM?si=X2TCXKzhmWO6EOis"
-                            title="Her — Official Video (Premiere)"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </section>
-
-            <h2 class="text-white font-bold text-center text-3xl" data-aos="zoom-out">¡Nuevo single disponible 23 de
-                agosto!</h2>
+            <h2 class="text-white font-bold text-center text-3xl" data-aos="zoom-out">¡Nuevo single disponible 12 de
+                septiembre!</h2>
             <div class="relative group" data-aos="fade-down">
-                <img src="img/Cover2.png" alt="Portada del single BETWEEN BROTHERS de Alen Jeynrod"
+                <img src="img/Cover4.jpg" alt="Portada del single A REASON MORE TO SMILE de Alen Jeynrod"
                     class="w-[325px] md:w-[500px] lg:w-[600px] shadow-lg shadow-gray-700 rounded-xl hover:scale-[102%] transition-all duration-400">
             </div>
-
-            <!-- AQUI IRÁ EL BUTTON -->
 
             <div
                 class="flex flex-col items-center justify-center gap-5 text-white link font-medium [section>a]:shadow-lg [section>a]:shadow-white">
@@ -184,157 +112,28 @@
             <section class="flex flex-col items-center justify-center gap-6 w-full max-w-[1200px] px-4 my-8"
                 data-aos="fade-up">
                 <h2 class="text-2xl md:text-3xl text-white font-bold text-center">Partituras oficiales</h2>
-                <p class="text-gray-300 text-center max-w-2xl">Piano sheet music — versiones de estudio exactamente como
-                    fueron
-                    grabadas.</p>
 
                 <!-- Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-                    <!-- CARD: HER -->
-                    <article
-                        class="bg-gray-900/20 border border-white/10 rounded-xl overflow-hidden shadow-md shadow-gray-400/10 hover:shadow-gray-400/20 transition"
-                        data-aos="zoom-in">
-                        <div class="aspect-[4/3] overflow-hidden">
-                            <img src="img/Portrait.png" alt="Portada de la partitura: Her – Studio Version"
-                                class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-300"
-                                loading="lazy" />
-                        </div>
 
-                        <div class="p-4 flex flex-col gap-3">
-                            <header class="flex flex-col">
-                                <h3 class="text-white font-semibold text-lg">Her — Studio Version</h3>
-                                <span class="text-gray-400 text-sm">Piano Sheet Music • Intermedio / Avanzado</span>
-                            </header>
+                    <div class="bg-gray-900/20 border border-white/10 rounded-xl overflow-hidden shadow-md shadow-gray-400/10 hover:shadow-gray-400/20 p-5 transition">
+                        <div id='product-component-1757583594381' data-aos="zoom-in"></div>
+                    </div>
 
-                            <!-- Etiquetas -->
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 rounded-md text-xs bg-white/10 text-gray-200">PDF</span>
-                                <span class="px-2 py-1 rounded-md text-xs bg-white/10 text-gray-200">F# mayor</span>
-                            </div>
+                    <div class="bg-gray-900/20 border border-white/10 rounded-xl overflow-hidden shadow-md shadow-gray-400/10 hover:shadow-gray-400/20 p-5 transition">
+                        <div id='product-component-1757584309754' data-aos="zoom-in"></div>
+                    </div>
 
-                            <!-- Acciones -->
-                            <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                                <a href="https://ko-fi.com/s/901842d3ca" target="_blank" rel="noopener"
-                                    class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white text-gray-900 font-semibold hover:bg-white/90 transition"
-                                    aria-label="Comprar partitura de Her en Ko-fi">
-                                    Comprar en Ko-fi
-                                </a>
-                                <a href="https://youtu.be/URHku2Ono4k" target="_blank" rel="noopener"
-                                    class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-gray-800 text-white font-semibold hover:bg-gray-700 transition"
-                                    aria-label="Ver video de la partitura de Her en YouTube">
-                                    Ver Video
-                                </a>
-                            </div>
-                        </div>
+                    <div class="bg-gray-900/20 border border-white/10 rounded-xl overflow-hidden shadow-md shadow-gray-400/10 hover:shadow-gray-400/20 p-5 transition">
+                        <div id='product-component-1757584526496' data-aos="zoom-in"></div>
+                    </div>
 
-                    </article>
+                    <div class="bg-gray-900/20 border border-white/10 rounded-xl overflow-hidden shadow-md shadow-gray-400/10 hover:shadow-gray-400/20 p-5 transition">
+                        <div id='product-component-1757585830532' data-aos="zoom-in"></div>
+                    </div>
 
-                    <!-- CARD: BETWEEEN BROTHERS -->
-                    <article
-                        class="bg-gray-900/20 border border-white/10 rounded-xl overflow-hidden shadow-md shadow-gray-400/10 hover:shadow-gray-400/20 transition"
-                        data-aos="zoom-in">
-                        <div class="aspect-[4/3] overflow-hidden">
-                            <img src="img/Cover2.png" alt="Portada de la partitura: Between Brothers – Studio Version"
-                                class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-300"
-                                loading="lazy" />
-                        </div>
-
-                        <div class="p-4 flex flex-col gap-3">
-                            <header class="flex flex-col">
-                                <h3 class="text-white font-semibold text-lg">Between Brothers — Studio Version</h3>
-                                <span class="text-gray-400 text-sm">Piano Sheet Music • Principiante</span>
-                            </header>
-
-                            <!-- Etiquetas -->
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 rounded-md text-xs bg-white/10 text-gray-200">PDF</span>
-                                <span class="px-2 py-1 rounded-md text-xs bg-white/10 text-gray-200">F major</span>
-                            </div>
-
-                            <!-- Acciones -->
-                            <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                                <a href="https://ko-fi.com/s/54b0536c58" target="_blank" rel="noopener"
-                                    class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white text-gray-900 font-semibold hover:bg-white/90 transition"
-                                    aria-label="Comprar partitura de Between Brothers en Ko-fi">
-                                    Comprar en Ko-fi
-                                </a>
-                            </div>
-                        </div>
-
-                    </article>
-
-                    <!-- CARD: A LOVE FOOL -->
-                    <article
-                        class="bg-gray-900/20 border border-white/10 rounded-xl overflow-hidden shadow-md shadow-gray-400/10 hover:shadow-gray-400/20 transition"
-                        data-aos="zoom-in">
-                        <div class="aspect-[4/3] overflow-hidden">
-                            <img src="img/Cover3.jpg" alt="Portada de la partitura: A Love Fool – Studio Version"
-                                class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-300"
-                                loading="lazy" />
-                        </div>
-
-                        <div class="p-4 flex flex-col gap-3">
-                            <header class="flex flex-col">
-                                <h3 class="text-white font-semibold text-lg">A Love Fool — Studio Version</h3>
-                                <span class="text-gray-400 text-sm">Piano Sheet Music • Intermedio</span>
-                            </header>
-
-                            <!-- Etiquetas -->
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 rounded-md text-xs bg-white/10 text-gray-200">PDF</span>
-                                <span class="px-2 py-1 rounded-md text-xs bg-white/10 text-gray-200">G major</span>
-                            </div>
-
-                            <!-- Acciones -->
-                            <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                                <a href="https://ko-fi.com/s/87340ea6b0" target="_blank" rel="noopener"
-                                    class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white text-gray-900 font-semibold hover:bg-white/90 transition"
-                                    aria-label="Comprar partitura de A Love Fool en Ko-fi">
-                                    Comprar en Ko-fi
-                                </a>
-                            </div>
-                        </div>
-
-                    </article>
-
-                    <!-- CARD: A REASON MORE TO SMILE -->
-                    <article
-                        class="bg-gray-900/20 border border-white/10 rounded-xl overflow-hidden shadow-md shadow-gray-400/10 hover:shadow-gray-400/20 transition"
-                        data-aos="zoom-in">
-                        <div class="aspect-[4/3] overflow-hidden">
-                            <img src="img/Cover4.jpg"
-                                alt="Portada de la partitura: A Reason More To Smile – Studio Version"
-                                class="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-300"
-                                loading="lazy" />
-                        </div>
-
-                        <div class="p-4 flex flex-col gap-3">
-                            <header class="flex flex-col">
-                                <h3 class="text-white font-semibold text-lg">A Reason More To Smile — Studio Version
-                                </h3>
-                                <span class="text-gray-400 text-sm">Piano Sheet Music • Intermedio / Avanzado </span>
-                            </header>
-
-                            <!-- Etiquetas -->
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 rounded-md text-xs bg-white/10 text-gray-200">PDF</span>
-                                <span class="px-2 py-1 rounded-md text-xs bg-white/10 text-gray-200">Eb major</span>
-                            </div>
-
-                            <!-- Acciones -->
-                            <div class="mt-1 flex flex-col sm:flex-row sm:items-center gap-3">
-                                <a href="https://ko-fi.com/s/67c30779b0" target="_blank" rel="noopener"
-                                    class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-white text-gray-900 font-semibold hover:bg-white/90 transition"
-                                    aria-label="Comprar partitura de A Reason More To Smile en Ko-fi">
-                                    Comprar en Ko-fi
-                                </a>
-                            </div>
-                        </div>
-
-                    </article>
                 </div>
             </section>
-
 
             <!-- SOBRE MÍ -->
             <div class="flex flex-col items-center justify-center gap-8 w-full max-w-[1200px] px-4 my-8">
@@ -391,10 +190,11 @@
                         </span>
                     </section>
                     <span>
-                        <a href='https://ko-fi.com/K3K81JJITI' target='_blank'><img height='36'
-                                style='border:0px;height:36px;' class="hover:scale-110 transition-all duration-200"
-                                src='https://storage.ko-fi.com/cdn/kofi3.png?v=6' border='0'
-                                alt='Buy Me a Coffee at ko-fi.com' /></a>
+                        <a href="https://alenjeynrod.myshopify.com/" target="_blank"
+                            class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-semibold shadow-lg hover:scale-105 hover:from-purple-700 hover:to-blue-600 transition-all duration-200">
+                            <img src="shop.svg" alt="Tienda" class="w-5 h-5">
+                            Mi tienda
+                        </a>
                     </span>
                 </section>
             </div>
@@ -420,109 +220,6 @@
 
         gtag('config', 'AW-17300584916');
     </script>
-
-    <script>
-        // Utilidad: formatea a YYYYMMDDTHHmmssZ (UTC) para Calendar/ICS
-        function toGoogleDate(dt) {
-            // dt: Date en timezone local (premiere viene con offset en el ISO)
-            const y = dt.getUTCFullYear();
-            const m = String(dt.getUTCMonth() + 1).padStart(2, '0');
-            const d = String(dt.getUTCDate()).padStart(2, '0');
-            const H = String(dt.getUTCHours()).padStart(2, '0');
-            const M = String(dt.getUTCMinutes()).padStart(2, '0');
-            const S = String(dt.getUTCSeconds()).padStart(2, '0');
-            return `${y}${m}${d}T${H}${M}${S}Z`;
-        }
-
-        (function initHerPremiere() {
-            const sec = document.getElementById('premiere-her');
-            if (!sec) return;
-
-            const iso = sec.getAttribute('data-premiere-iso');              // ej. 2025-08-23T19:00:00-06:00
-            const videoId = sec.getAttribute('data-video-id');              // ej. abcDEF123
-            if (!iso || !videoId) return;
-
-            const start = new Date(iso);
-            const end = new Date(start.getTime() + 45 * 60 * 1000);         // ⬅️ Duración estimada 45 min (ajústalo si quieres)
-
-            // Links
-            const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
-            const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?modestbranding=1&rel=0`;
-
-            // Rellena enlaces
-            const watchLink = document.getElementById('her-watch-link');
-            const gcalLink = document.getElementById('her-gcal-link');
-            const icsLink = document.getElementById('her-ics-link');
-            const iframe = document.getElementById('her-embed');
-            const dateLine = document.getElementById('her-countdown-date');
-
-            if (watchLink) watchLink.href = watchUrl;
-            if (iframe) iframe.src = embedUrl;
-
-            // Línea con fecha legible (en MX)
-            try {
-                const fmt = new Intl.DateTimeFormat('es-MX', {
-                    dateStyle: 'full', timeStyle: 'short', timeZone: 'America/Mexico_City'
-                });
-                dateLine.textContent = `Estreno: ${fmt.format(start)} (hora CDMX)`;
-            } catch (_) {
-                dateLine.textContent = `Estreno: ${start.toString()}`;
-            }
-
-            // Google Calendar link
-            const gStart = toGoogleDate(start);
-            const gEnd = toGoogleDate(end);
-            const title = encodeURIComponent('“Her” — Official Video (Premiere)');
-            const details = encodeURIComponent('Únete al estreno en YouTube: ' + watchUrl);
-            const location = encodeURIComponent('YouTube');
-            const gcal = `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${gStart}/${gEnd}&details=${details}&location=${location}&sf=true&output=xml`;
-            if (gcalLink) gcalLink.href = gcal;
-
-            // .ICS (para Apple/Outlook/etc.)
-            const dtStamp = toGoogleDate(new Date());
-            const ics =
-                `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//alenjeynrod//premiere-her//ES
-CALSCALE:GREGORIAN
-METHOD:PUBLISH
-BEGIN:VEVENT
-UID:${Date.now()}@alenjeynrod
-DTSTAMP:${dtStamp}
-DTSTART:${gStart}
-DTEND:${gEnd}
-SUMMARY:“Her” — Official Video (Premiere)
-DESCRIPTION:${'Únete al estreno en YouTube: ' + watchUrl}
-LOCATION:YouTube
-END:VEVENT
-END:VCALENDAR`;
-            const icsBlob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-            const icsUrl = URL.createObjectURL(icsBlob);
-            if (icsLink) icsLink.href = icsUrl;
-
-            // Countdown
-            const el = document.getElementById('her-countdown');
-            function tick() {
-                const now = new Date().getTime();
-                const diff = start.getTime() - now;
-
-                if (diff <= 0) {
-                    el.textContent = '¡Estamos en vivo! 💫';
-                    clearInterval(timer);
-                    return;
-                }
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-                el.textContent = `${String(d).padStart(2, '0')}d : ${String(h).padStart(2, '0')}h : ${String(m).padStart(2, '0')}m : ${String(s).padStart(2, '0')}s`;
-            }
-            tick();
-            const timer = setInterval(tick, 1000);
-        })();
-    </script>
-
 
 </body>
 
