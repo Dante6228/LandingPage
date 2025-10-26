@@ -39,6 +39,11 @@
             background-color: #4B5563;
             color: #FFFFFF;
         }
+        
+        .mono { 
+            font-variant-numeric: tabular-nums; 
+        }
+
     </style>
     <script src="js.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -57,6 +62,82 @@
                 <h1 class="text-xl text-white font-bold" data-aos="zoom-in">Alen Jeynrod</h1>
                 <h2 class="text-gray-300 font-medium" data-aos="zoom-in">🎹 Pianista y compositor de México.<br>¡Espero
                     que disfrutes mi música! 🎹</h2>
+            </section>
+
+            <!-- ====== Premiere Between Brothers ====== -->
+            <section id="bb-premiere"
+            class="w-full max-w-[1200px] px-4 pt-2 pb-6 bg-gray-900/20 border border-white/10 rounded-xl shadow-md shadow-gray-400/10"
+            data-when="2025-10-26T13:00:00-06:00"
+            data-youtube="sAnhYpftdeA"        
+            data-aos="zoom-in">
+
+            <div class="flex flex-col items-center text-center gap-4">
+                <h3 class="text-white text-xl md:text-2xl font-bold">
+                🎬 Estreno — <span class="italic">Between Brothers</span>
+                </h3>
+                <p id="bb-when-label" class="text-gray-300 text-sm md:text-base"></p>
+
+                <div id="bb-thumb" class="relative group cursor-pointer w-full max-w-3xl rounded-xl overflow-hidden shadow-lg shadow-gray-700/40">
+                    <img id="bb-thumb-img" class="w-full rounded-xl transition-transform duration-300 group-hover:scale-105"
+                        src="https://img.youtube.com/vi/sAnhYpftdeA/maxresdefault.jpg"
+                        alt="Between Brothers — Official Video (Preview)">
+
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center transition group-hover:bg-black/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="w-16 h-16 opacity-80 group-hover:opacity-100">
+                        <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+
+                    <div class="absolute bottom-2 right-2 bg-red-800 text-white text-xs px-2 py-1 rounded-md opacity-80">
+                        Ver en YouTube
+                    </div>
+
+                </div>
+
+                <!-- Contador -->
+                <div id="bb-countdown" class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-2xl">
+                <div class="flex flex-col items-center justify-center bg-gray-900/30 rounded-xl p-3 border border-white/10">
+                    <span class="text-3xl md:text-4xl text-white font-bold mono" id="bb-d">--</span>
+                    <span class="text-gray-300 text-xs md:text-sm">días</span>
+                </div>
+                <div class="flex flex-col items-center justify-center bg-gray-900/30 rounded-xl p-3 border border-white/10">
+                    <span class="text-3xl md:text-4xl text-white font-bold mono" id="bb-h">--</span>
+                    <span class="text-gray-300 text-xs md:text-sm">horas</span>
+                </div>
+                <div class="flex flex-col items-center justify-center bg-gray-900/30 rounded-xl p-3 border border-white/10">
+                    <span class="text-3xl md:text-4xl text-white font-bold mono" id="bb-m">--</span>
+                    <span class="text-gray-300 text-xs md:text-sm">min</span>
+                </div>
+                <div class="flex flex-col items-center justify-center bg-gray-900/30 rounded-xl p-3 border border-white/10">
+                    <span class="text-3xl md:text-4xl text-white font-bold mono" id="bb-s">--</span>
+                    <span class="text-gray-300 text-xs md:text-sm">seg</span>
+                </div>
+                </div>
+
+                <!-- CTAs antes del estreno -->
+                <div id="bb-cta" class="flex flex-wrap items-center justify-center gap-2 hover:cursor-pointer">
+                <a id="bb-youtube-link" target="_blank" rel="noopener noreferrer"
+                    class="px-4 py-2 rounded-full bg-red-600 text-white font-semibold shadow-lg hover:scale-105 transition">
+                    Ver estreno en YouTube
+                </a>
+                </div>
+
+                <!-- Player cuando llegue la hora -->
+                <div id="bb-player" class="w-full max-w-3xl hidden">
+                <div class="relative w-full" style="padding-bottom:56.25%;">
+                    <iframe id="bb-iframe" class="absolute inset-0 w-full h-full rounded-xl"
+                    src="" title="Between Brothers — Official Video" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="mt-3 flex flex-wrap items-center justify-center gap-2">
+                    <a id="bb-youtube-direct" target="_blank" rel="noopener noreferrer"
+                    class="px-4 py-2 rounded-full bg-red-600 text-white font-semibold shadow-lg hover:scale-105 transition">
+                    Ver en YouTube
+                    </a>
+                </div>
+                </div>
+            </div>
             </section>
 
             <h2 class="text-white font-bold text-center text-3xl" data-aos="zoom-out">¡Nuevo single disponible 12 de
@@ -331,6 +412,91 @@
 
         gtag('config', 'AW-17300584916');
     </script>
+
+    <script>
+        (function(){
+        const $sec = document.getElementById('bb-premiere');
+        if(!$sec) return;
+
+        const whenStr = $sec.dataset.when || '';
+        const ytId    = ($sec.dataset.youtube || '').trim();
+        const smart   = $sec.dataset.smartlink || '#';
+
+        const when = new Date(whenStr);
+        const $label = document.getElementById('bb-when-label');
+        if (isNaN(when.getTime())) {
+            if ($label) $label.textContent = 'Configura correctamente la fecha del estreno.';
+            return;
+        }
+
+        // Texto legible con horario local del visitante
+        const whenNice = when.toLocaleString('es-MX', { dateStyle: 'full', timeStyle: 'short' });
+        if ($label) $label.innerHTML = `Estreno en tu horario local: <strong>${whenNice}</strong>`;
+
+        // Enlaces
+        const ytUrl = ytId ? `https://www.youtube.com/watch?v=${ytId}` : '#';
+        const pad = n => String(n).padStart(2,'0');
+        const toCalFmt = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+        const end = new Date(when.getTime() + 60*60*1000); // 1h
+        const calUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent('Between Brothers — Estreno del video oficial')}&dates=${toCalFmt(when)}/${toCalFmt(end)}&details=${encodeURIComponent('Premiere en YouTube de Alen Jeynrod')}&location=${encodeURIComponent('YouTube')}`;
+
+        const byId = id => document.getElementById(id);
+        const setHref = (id, href) => { const a = byId(id); if (a) a.href = href; };
+        setHref('bb-youtube-link', ytUrl);
+        setHref('bb-calendar', calUrl);
+        setHref('bb-smartlink', smart);
+        setHref('bb-smartlink-2', smart);
+        setHref('bb-youtube-direct', ytUrl);
+
+        const $d = byId('bb-d'), $h = byId('bb-h'), $m = byId('bb-m'), $s = byId('bb-s');
+        const $cd = byId('bb-countdown'), $cta = byId('bb-cta'), $pl = byId('bb-player'), $iframe = byId('bb-iframe');
+
+        const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const autoplay = prefersReduce ? 0 : 1;
+
+        const showPlayer = () => {
+            if ($cd) $cd.classList.add('hidden');
+            if ($cta) $cta.classList.add('hidden');
+            if ($pl) {
+            if ($iframe && ytId){
+                $iframe.src = `https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&autoplay=${autoplay}`;
+            }
+            $pl.classList.remove('hidden');
+            }
+        };
+
+        const tick = () => {
+            const now = new Date();
+            const dif = when.getTime() - now.getTime();
+            if (dif <= 0) {
+            showPlayer();
+            clearInterval(timer);
+            return;
+            }
+            const sec = Math.floor(dif / 1000);
+            const days = Math.floor(sec / 86400);
+            const hrs  = Math.floor((sec % 86400) / 3600);
+            const mins = Math.floor((sec % 3600) / 60);
+            const secs = sec % 60;
+            if ($d) $d.textContent = days;
+            if ($h) $h.textContent = String(hrs).padStart(2,'0');
+            if ($m) $m.textContent = String(mins).padStart(2,'0');
+            if ($s) $s.textContent = String(secs).padStart(2,'0');
+        };
+
+        if (new Date() >= when) { showPlayer(); return; }
+        tick();
+        const timer = setInterval(tick, 1000);
+        const $thumb = document.getElementById('bb-thumb');
+            if ($thumb && ytId) {
+            const ytUrl = `https://www.youtube.com/watch?v=${ytId}`;
+            $thumb.addEventListener('click', () => {
+                window.open(ytUrl, '_blank'); // 🔗 abre el video en YouTube
+            });
+        }
+        })();
+    </script>
+
 
 </body>
 

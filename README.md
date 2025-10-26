@@ -12,6 +12,9 @@ El pie de página contiene dos elementos clave:
 - 📝 **Breve historia del artista**: Un fragmento sobre su trayectoria y sus influencias musicales.  
 - 📲 **Redes Sociales**: Botones para seguir a Alen Jeynrod en **TikTok, YouTube e Instagram**.  
 
+### DESPLIEGUE
+- El comando para tailwind es: npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
+
 ## 🛠️ Tecnologías Utilizadas  
 Este proyecto fue desarrollado con:  
 - ⚡ [Tailwind CSS 3.4.17](https://v3.tailwindcss.com/)  
