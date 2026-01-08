@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Dreaming Experience Hub. Un viaje inmersivo a través de las notas y memorias de Alen Jeynrod.">
+    <title>Dreaming | The Experience Hub</title>
+
+    <link href="../src/output.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        .song-card {
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .capsule-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s ease-in-out, opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        .capsule-open {
+            max-height: 520px;
+            opacity: 1;
+        }
+
+        /* No intentes "glass" dentro del panel nativo: se glitchea */
+        audio::-webkit-media-controls-panel {
+            background-color: transparent;
+            backdrop-filter: none;
+            border: 0;
+        }
+
+        audio::-webkit-media-controls-current-time-display,
+        audio::-webkit-media-controls-time-remaining-display {
+            color: #E5E5E0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+        }
+
+        .mote {
+            position: absolute;
+            background: #E5E5E0;
+            border-radius: 50%;
+            width: 2px;
+            height: 2px;
+            animation: float-mote linear infinite;
+        }
+
+        @keyframes float-mote {
+            0% {
+                opacity: 0;
+                transform: translateY(0);
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="font-body antialiased bg-[#1a130f] text-cream selection:bg-orange-900/40 selection:text-cream overflow-x-hidden">
+
+    <div
+        class="fixed inset-0 w-full h-full bg-[url('../img/Profile.jpg')] bg-cover bg-center opacity-10 -z-20 sepia-[.4] grayscale blur-[5px]">
+    </div>
+    <div class="fixed inset-0 w-full h-full bg-noise opacity-5 -z-10 pointer-events-none"></div>
+    <div id="dust-container" class="fixed inset-0 w-full h-full -z-5 pointer-events-none overflow-hidden"></div>
+
+    <nav class="fixed top-0 left-0 w-full p-6 z-50 flex justify-between items-center mix-blend-difference">
+        <a href="../index.html" class="text-xs tracking-[0.2em] uppercase opacity-50 hover:opacity-100 transition">←
+            Alen
+            Jeynrod</a>
+        <span class="font-display italic text-lg opacity-80">Galería de arte</span>
+    </nav>
+
+    <main class="min-h-screen flex flex-col items-center pt-32 pb-20 px-4 sm:px-6">
+
+        <header class="text-center max-w-2xl mx-auto mb-32" data-aos="fade-down" data-aos-duration="1500">
+            <span class="text-xs tracking-[0.5em] text-cream/30 uppercase mb-4 block">La Exhibición</span>
+            <h1 class="text-6xl md:text-8xl font-display italic text-cream mb-8">Dreaming</h1>
+            <p class="text-sm md:text-base text-cream-dim font-light leading-loose">
+                "Este trabajo ha sido, más que un proyecto, un refugio.
+                Aquí yacen las memorias, los borradores y el silencio detrás de cada nota."
+            </p>
+            <div class="w-px h-24 bg-gradient-to-b from-cream/20 to-transparent mx-auto mt-12"></div>
+        </header>
+
+        <div id="gallery-container" class="w-full max-w-5xl space-y-40"></div>
+
+        <section class="w-full max-w-3xl mx-auto text-center py-32 border-b border-white/5 px-4" data-aos="fade-up">
+            <h3 class="text-xs tracking-[0.4em] text-cream/40 uppercase mb-12">Créditos</h3>
+            <div class="space-y-8 font-light text-cream-dim text-sm leading-loose">
+                <p>
+                    Quisiera agradecer a todas las personas que hicieron posible la creación de todas estas piezas.
+                    <br class="hidden md:block">
+                    <span class="italic text-cream/60">"Si no fuese por ustedes, estas canciones no estarían
+                        aquí."</span>
+                </p>
+                <p>
+                    También me gustaría agradecer a todas las personas que desde un inicio me apoyaron en este sueño.
+                    Es un honor para mí el poder presentarles esto.
+                </p>
+                <div class="pt-8">
+                    <p class="text-xs text-cream/30 uppercase tracking-widest mb-2">Creado, imaginado y producido por
+                    </p>
+                    <p class="text-2xl font-display text-cream">Alen Jeynrod</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="w-full max-w-2xl mt-20 mb-20 pt-20 px-4" data-aos="zoom-in">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-display italic text-cream">Guestbook</h3>
+                <p class="text-sm text-cream/50 mt-2 font-light">Deja una nota en este archivo antes de irte.</p>
+            </div>
+
+            <form name="guestbook" method="POST" data-netlify="true" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input type="text" name="name" placeholder="Tu Nombre"
+                        class="bg-white/5 border border-white/10 rounded-none px-4 py-3 text-sm text-cream placeholder-cream/20 focus:outline-none focus:border-cream/40 transition">
+                    <input type="text" name="location" placeholder="Ciudad / País"
+                        class="bg-white/5 border border-white/10 rounded-none px-4 py-3 text-sm text-cream placeholder-cream/20 focus:outline-none focus:border-cream/40 transition">
+                </div>
+                <textarea name="message" rows="4" placeholder="¿Qué sentiste al escuchar Dreaming?"
+                    class="w-full bg-white/5 border border-white/10 rounded-none px-4 py-3 text-sm text-cream placeholder-cream/20 focus:outline-none focus:border-cream/40 transition resize-none"></textarea>
+
+                <div class="text-center">
+                    <button type="submit"
+                        class="px-8 py-3 bg-cream text-warm-black font-display italic text-sm hover:bg-white transition duration-500 tracking-widest">
+                        Guardar Nota
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        AOS.init({ duration: 1200, once: true, offset: 50 });
+
+        const songs = [
+            {
+                id: '01',
+                title: 'Intro',
+                meta: 'Eb Major • 155 BPM • 3:49',
+                desc: 'El inicio del sueño. Una entrada etérea que prepara los sentidos para el viaje a través de las notas.',
+                img: '../img/score_intro.png',
+                type: 'score'
+            },
+            {
+                id: '02',
+                title: 'Her',
+                subtitle: '"Nacida de la improvisación"',
+                meta: 'F# Major • 6/8 • 90 BPM',
+                desc: 'Recuerdo grabar un demo muy emocionado y mandárselo a ella, diciéndole: "Así suenas en mi cabeza". Dos acordes mágicos que se convirtieron en una identidad.',
+                img: '../img/portrait.png',
+                type: 'album',
+                hasCapsule: true,
+                capsuleFile: '../audio/ambience.mp3'
+            },
+            {
+                id: '03',
+                title: 'A Reason More To Smile',
+                meta: 'Eb Major • 6/8 • 108 BPM',
+                desc: 'Un abrazo musical para mi mamá en días difíciles. La sensación de paz imposible de poner en palabras.',
+                img: '../img/cover4.jpg',
+                type: 'album'
+            },
+            {
+                id: '04',
+                title: 'Guiding Light',
+                subtitle: '"Homenaje a mi papá"',
+                meta: 'F Major • 6/8 • 98 BPM',
+                desc: 'Cuando su fortaleza se quebró, sentí que mi mundo también lo hacía. Esta melodía busca recordar que su luz siempre será mi guía.',
+                img: '../img/Guiding.png',
+                type: 'score'
+            },
+            {
+                id: '05',
+                title: 'Between Brothers',
+                meta: 'F Major • 6/8 • 100 BPM',
+                desc: 'Recuerdo para mi tío al que nunca conocí del todo. Quise rendirle un homenaje y guardar entre notas su ser.',
+                img: '../img/cover2.png',
+                type: 'album'
+            },
+            {
+                id: '06',
+                title: 'Am I Dreaming?',
+                meta: 'G Major • 6/8 • 94 BPM',
+                desc: 'Esto se siente como flotar en un sueño. Un viaje contemplativo, lento y meloso, sin un clímax claro.',
+                img: '../img/ImDreaming.png',
+                type: 'score'
+            },
+            {
+                id: '07',
+                title: 'A Love Fool',
+                meta: 'G Major • 6/8 • 90 BPM',
+                desc: 'El eco de un amor que nunca encontró su reflejo. Inspirada en Radiohead, retrata esa mezcla de ternura y resignación.',
+                img: '../img/cover3.jpg',
+                type: 'album'
+            },
+            {
+                id: '08',
+                title: 'A Pretty Love',
+                meta: 'F# Major • 4/4 • 138 BPM',
+                desc: 'Una oda íntima a mi forma de amar. Nació como un preludio pero cobró vida propia con un motivo melódico que me encantó desde el inicio.',
+                img: '../img/Pretty.png',
+                type: 'score'
+            },
+            {
+                id: '09',
+                title: 'A Quiet Heart',
+                meta: 'A Major • 132 BPM',
+                desc: 'El acto de amar desde el silencio y la contemplación. Ese cariño que no necesita palabras para existir.',
+                img: '../img/Quiet.png',
+                type: 'score'
+            },
+            {
+                id: '10',
+                title: 'The Moon is Beautiful...',
+                subtitle: '"Isn\'t It?"',
+                meta: 'Db Major • 6/8 • 104 BPM',
+                desc: 'Fui de viaje y no podía parar de contemplar la luna; poseía un magnetismo del que no podía apartar la vista.',
+                img: '../img/Moon.png',
+                type: 'score'
+            },
+            {
+                id: '11',
+                title: "I'm In Love",
+                meta: 'C Major • 135 BPM',
+                desc: '"Así se siente amar." <br> Una declaración nacida bajo la luz de la luna. Magnetismo puro del que no podía apartar la vista.',
+                img: '../img/Love.png',
+                type: 'score'
+            }
+        ];
+
+        const container = document.getElementById('gallery-container');
+        container.innerHTML = '';
+
+        songs.forEach((song, index) => {
+            const isEven = index % 2 === 0;
+
+            const hasCapsule = (song.hasCapsule === true);
+
+            const hasAudio = (typeof song.audio === 'string' && song.audio.trim().length > 0);
+
+            const rowClass = isEven ? 'flex-row' : 'flex-row-reverse';
+            const textClass = isEven ? 'text-center md:text-left' : 'text-center md:text-right';
+            const paddingClass = isEven ? 'md:pl-16' : 'md:pr-16';
+            const lineClass = isEven ? 'md:mr-auto md:ml-0' : 'md:ml-auto md:mr-0';
+            const alignClass = 'items-center';
+
+            const numPosition = isEven
+                ? 'left-0 right-0 md:left-[-2.5rem] md:right-auto text-center md:text-left'
+                : 'left-0 right-0 md:left-auto md:right-[-2.5rem] text-center md:text-right';
+
+            const cardHtml = song.type === 'score'
+                ? `<div class="score-card"><img src="${song.img}" class="score-img" alt="${song.title}"></div>`
+                : `<div class="album-card"><img src="${song.img}" class="album-img" alt="${song.title}"></div>`;
+
+            const capsuleHtml = hasCapsule ? `
+            <div class="flex justify-center ${isEven ? 'md:justify-start' : 'md:justify-end'} pt-4">
+                <button type="button" onclick="toggleCapsule('capsule-${song.id}')" class="group flex items-center gap-3 text-xs tracking-widest uppercase text-orange-200/60 hover:text-orange-200 transition">
+                    <span class="w-8 h-px bg-orange-200/30 group-hover:w-12 transition-all"></span> Abrir Time Capsule
+                </button>
+                </div>
+
+                <div id="capsule-${song.id}" class="capsule-content mt-4 text-left">
+                <div class="bg-white/5 border border-white/10 backdrop-blur-md p-6 relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-40 pointer-events-none" style="background: radial-gradient(circle at 30% 10%, rgba(255,255,255,.08), transparent 60%);"></div>
+                    <div class="relative flex flex-col gap-4">
+                    <audio controls preload="metadata" class="w-full">
+                        <source src="${song.capsuleFile}" type="audio/mpeg">
+                        Tu navegador no soporta audio.
+                    </audio>
+                    </div>
+                </div>
+            </div>
+            ` : '';
+
+            const normalAudioHtml = (!hasCapsule && hasAudio) ? `
+            <div class="pt-4">
+                <audio controls class="w-full h-8 opacity-70 hover:opacity-100 transition">
+                    <source src="${song.audio}" type="audio/mpeg">
+                </audio>
+                </div>
+            ` : '';
+
+            const html = `
+            <article class="song-station relative group" data-aos="fade-up">
+                <div class="absolute top-[-3rem] md:top-0 text-6xl md:text-[10rem] font-display text-white/[0.03] md:text-white/[0.02] -z-10 select-none ${numPosition}">
+                    ${song.id}
+                </div>
+
+                <div class="flex flex-col md:${rowClass} gap-8 md:gap-0 ${alignClass}">
+                    <div class="w-full md:w-1/2 flex justify-center items-center">
+                    ${cardHtml}
+                    </div>
+
+                    <div class="w-full md:w-1/2 space-y-6 pt-4 ${textClass} ${paddingClass}">
+                    <div>
+                        <h2 class="text-4xl font-display text-cream">${song.title}</h2>
+                        ${song.subtitle ? `<span class="text-xs font-display italic text-cream/60 mt-1 block">${song.subtitle}</span>` : ''}
+                        <p class="text-xs font-mono text-cream/40 mt-2 tracking-widest uppercase">${song.meta}</p>
+                    </div>
+
+                    <div class="h-px w-12 bg-cream/20 mx-auto ${lineClass}"></div>
+
+                    <p class="text-sm text-cream-dim font-light leading-relaxed text-pretty">
+                        ${song.desc}
+                    </p>
+
+                    ${capsuleHtml}
+                    ${normalAudioHtml}
+                    </div>
+                </div>
+                </article>
+            `;
+
+            container.insertAdjacentHTML('beforeend', html);
+
+            if (index === 4) {
+                const quoteHtml = `
+                    <div class="w-full max-w-2xl mx-auto text-center py-20 opacity-60 px-4" data-aos="zoom-in">
+                        <span class="text-2xl text-cream/20 font-display block mb-4">“</span>
+                        <p class="text-xl md:text-2xl font-display italic text-cream leading-relaxed">
+                        Si alguna de estas piezas logra que cierres los ojos y te pierdas en un instante de calma,
+                        entonces Dreaming habrá cumplido su propósito.
+                        </p>
+                        <br>
+                        <p class="text-xs text-cream/30">Alen Jeynrod</p>
+                    </div>
+                    `;
+                container.insertAdjacentHTML('beforeend', quoteHtml);
+            }
+        });
+
+        AOS.refreshHard();
+
+        const containerDust = document.getElementById('dust-container');
+        for (let i = 0; i < 30; i++) {
+            const mote = document.createElement('div');
+            mote.classList.add('mote');
+            mote.style.left = `${Math.random() * 100}%`;
+            mote.style.top = `${Math.random() * 100}%`;
+            mote.style.animationDuration = `${Math.random() * 10 + 10}s`;
+            mote.style.opacity = Math.random() * 0.3;
+            containerDust.appendChild(mote);
+        }
+
+        function toggleCapsule(id) {
+            const capsule = document.getElementById(id);
+            if (!capsule) return;
+
+            document.querySelectorAll('.capsule-content').forEach(el => {
+                if (el !== capsule) {
+                    el.classList.remove('capsule-open');
+                    el.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+                }
+            });
+
+            const willClose = capsule.classList.contains('capsule-open');
+            capsule.classList.toggle('capsule-open');
+
+            if (willClose) {
+                capsule.querySelectorAll('audio').forEach(a => { a.pause(); a.currentTime = 0; });
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -2,6 +2,25 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   content: ["./**/*.{html,php,js}", "!./node_modules/**"], 
+  safelist: [
+    "md:flex-row",
+    "md:flex-row-reverse",
+    "md:text-left",
+    "md:text-right",
+    "md:pl-16",
+    "md:pr-16",
+    "md:mr-auto",
+    "md:ml-0",
+    "md:ml-auto",
+    "md:mr-0",
+    "md:left-[-2.5rem]",
+    "md:right-[-2.5rem]",
+    "md:left-auto",
+    "md:right-auto",
+    "text-center",
+    "text-left",
+    "text-right",
+  ],
   theme: {
     extend: {
       colors: {
