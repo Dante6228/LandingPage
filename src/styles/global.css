@@ -100,6 +100,42 @@
   }
 }
 
+/* =============================================================================
+   Scroll de la página — como el scroll editorial de bydan.art, en versión nocturna:
+   barra crema de esquinas rectas sobre un carril oscuro; se ilumina al pasar el cursor.
+   - Chrome, Edge, Brave y Safari: ::-webkit-scrollbar (permite esquinas rectas).
+   - Firefox: propiedades estándar, solo dentro de @supports (-moz-appearance: none).
+   OJO: no usar las propiedades estándar fuera de ese bloque. En Chrome se heredan y anulan
+   todo ::-webkit-scrollbar (vuelve la barra gris del sistema). Tampoco sirve
+   @supports selector(::-webkit-scrollbar): Chrome responde que no lo soporta.
+   ============================================================================= */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent; /* toma el fondo de cada página (portada o galería) */
+  border-left: 1px solid rgba(229, 229, 224, 0.08);
+}
+::-webkit-scrollbar-thumb {
+  background-color: #E5E5E0; /* crema del sitio, pleno */
+  border-radius: 0;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #F6F1E4;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+@supports (-moz-appearance: none) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #E5E5E0 transparent;
+  }
+}
+
 /* ---- Antes en src/index.css ---- */
 details > summary {
   list-style: none;
@@ -113,12 +149,12 @@ details > summary::-webkit-details-marker {
 }
 .video-scroll::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
+  border-radius: 0;
   margin: 0 10%;
 }
 .video-scroll::-webkit-scrollbar-thumb {
   background: rgba(229, 229, 224, 0.3);
-  border-radius: 10px;
+  border-radius: 0;
   transition: background 0.3s;
   cursor: pointer;
 }

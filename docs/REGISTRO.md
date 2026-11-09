@@ -77,6 +77,7 @@ Propuesto por Claude y aprobado por Dante (puntos 1 a 7). Mismo contenido; cambi
 5. ~~Partitura como divisor~~: se probó y no le gustó a Dante. Descartado.
 6. **Oficio**: capitular real en la bio (`.drop-cap`), textos sin justificar, Bandsintown plegado si no hay fechas, vinilo con la paleta cálida del sitio (los colores de "Her" quedan como halo detrás del disco).
 7. **Live Sessions** con duración y mes de publicación (datos reales de YouTube).
+8. **Scroll de la página** (como el scroll editorial de bydan.art, en versión nocturna): barra delgada en crema pleno `#E5E5E0`, esquinas rectas, sin flechas, carril transparente con una línea fina; se ilumina al pasar el cursor. Verificado en Chrome 156 real. Chrome/Edge/Brave/Safari usan `::-webkit-scrollbar`; Firefox, `scrollbar-color` solo dentro de `@supports (-moz-appearance: none)`. **No poner `scrollbar-color` fuera de ese bloque**: en Chrome se hereda y anula el diseño (vuelve la barra gris y ancha del sistema).
 
 Orden oficial (confirmado por Dante): 01 Intro, 02 Her, 03 A Reason More To Smile, 04 Between Brothers, 05 Guiding Light, 06 Am I Dreaming?, 07 A Love Fool, 08 A Pretty Love, 09 A Quiet Heart, 10 The Moon is Beautiful Isn’t It?, 11 I’m In Love. Portada y galería siguen este orden.
 
