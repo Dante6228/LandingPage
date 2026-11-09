@@ -109,30 +109,34 @@
    todo ::-webkit-scrollbar (vuelve la barra gris del sistema). Tampoco sirve
    @supports selector(::-webkit-scrollbar): Chrome responde que no lo soporta.
    ============================================================================= */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: transparent; /* toma el fondo de cada página (portada o galería) */
-  border-left: 1px solid rgba(229, 229, 224, 0.08);
-}
-::-webkit-scrollbar-thumb {
-  background-color: #E5E5E0; /* crema del sitio, pleno */
-  border-radius: 0;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-::-webkit-scrollbar-thumb:hover {
-  background-color: #F6F1E4;
-}
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-@supports (-moz-appearance: none) {
-  html {
-    scrollbar-width: thin;
-    scrollbar-color: #E5E5E0 transparent;
+/* Solo en computadoras (mouse y pantalla de 768 px o más): en celulares se queda la barra
+   flotante del sistema, que es la que se espera al deslizar con el dedo. */
+@media (hover: hover) and (pointer: fine) and (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent; /* toma el fondo de cada página (portada o galería) */
+    border-left: 1px solid rgba(229, 229, 224, 0.08);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #E5E5E0; /* crema del sitio, pleno */
+    border-radius: 0;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #F6F1E4;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  @supports (-moz-appearance: none) {
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: #E5E5E0 transparent;
+    }
   }
 }
 

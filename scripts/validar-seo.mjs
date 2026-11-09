@@ -52,6 +52,12 @@ for (const page of ['/', '/gallery']) {
   if (!/hreflang="es-MX"/.test(html)) err(`${page}: falta hreflang`);
   if (!/twitter:card/.test(html)) err(`${page}: falta twitter:card`);
   if (ogImage && ogImage.startsWith(SITE) && !fileFor(ogImage)) err(`${page}: og:image no existe en dist (${ogImage})`);
+  if (attr(html, /<meta property="og:image:width" content="([^"]*)"/) !== '1200' || attr(html, /<meta property="og:image:height" content="([^"]*)"/) !== '630')
+    err(`${page}: la imagen social no declara 1200×630`);
+  // Íconos enlazados: deben existir
+  for (const m of html.matchAll(/<link rel="(?:icon|apple-touch-icon|manifest)"[^>]*href="([^"]+)"/g)) if (!fileFor(SITE + m[1].split('?')[0])) err(`${page}: ícono enlazado no existe (${m[1]})`);
+  if (!/<link rel="icon" href="\/favicon\.ico(\?v=\d+)?"/.test(html)) err(`${page}: falta favicon.ico`);
+  if (!/rel="apple-touch-icon"/.test(html)) err(`${page}: falta apple-touch-icon`);
 
   // Contenido rastreable sin JavaScript
   const mustContain = page === '/' ? ['Alen Jeynrod', 'Dreaming', 'A Reason More To Smile', 'El Artista', 'Live Sessions'] : ['Intro', 'Guiding Light', 'I&#39;m In Love', 'Créditos'];
@@ -98,6 +104,16 @@ for (const l of locs) if (!fileFor(l)) err(`sitemap: ${l} no existe`);
 const imgs = [...sitemap.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)].map((m) => m[1]);
 for (const i of imgs) if (!fileFor(i)) err(`sitemap: imagen ${i} no existe`);
 ok.push(`sitemap: ${locs.length} páginas, ${imgs.length} imágenes`);
+
+// Manifest y favicon (Google exige un favicon cuadrado múltiplo de 48 px)
+const manifest = JSON.parse(readFileSync(join(dist, 'site.webmanifest'), 'utf8'));
+for (const i of manifest.icons || []) if (!fileFor(SITE + i.src)) err(`manifest: ícono ${i.src} no existe`);
+if (!(manifest.icons || []).some((i) => i.purpose === 'any')) err('manifest: falta un ícono "any"');
+if (!(manifest.icons || []).some((i) => i.purpose === 'maskable')) err('manifest: falta un ícono "maskable"');
+const ico = readFileSync(join(dist, 'favicon.ico'));
+const icoSizes = Array.from({ length: ico.readUInt16LE(4) }, (_, i) => ico[6 + i * 16] || 256);
+if (!icoSizes.some((s) => s % 48 === 0)) err(`favicon.ico sin tamaño múltiplo de 48 (${icoSizes.join(', ')})`);
+ok.push(`favicon.ico ${icoSizes.join('/')} px; manifest con ${manifest.icons.length} íconos (any + maskable)`);
 
 // robots.txt
 const robotsTxt = readFileSync(join(dist, 'robots.txt'), 'utf8');

@@ -77,9 +77,18 @@ Propuesto por Claude y aprobado por Dante (puntos 1 a 7). Mismo contenido; cambi
 5. ~~Partitura como divisor~~: se probó y no le gustó a Dante. Descartado.
 6. **Oficio**: capitular real en la bio (`.drop-cap`), textos sin justificar, Bandsintown plegado si no hay fechas, vinilo con la paleta cálida del sitio (los colores de "Her" quedan como halo detrás del disco).
 7. **Live Sessions** con duración y mes de publicación (datos reales de YouTube).
-8. **Scroll de la página** (como el scroll editorial de bydan.art, en versión nocturna): barra delgada en crema pleno `#E5E5E0`, esquinas rectas, sin flechas, carril transparente con una línea fina; se ilumina al pasar el cursor. Verificado en Chrome 156 real. Chrome/Edge/Brave/Safari usan `::-webkit-scrollbar`; Firefox, `scrollbar-color` solo dentro de `@supports (-moz-appearance: none)`. **No poner `scrollbar-color` fuera de ese bloque**: en Chrome se hereda y anula el diseño (vuelve la barra gris y ancha del sistema).
+8. **Scroll de la página** (como el scroll editorial de bydan.art, en versión nocturna): barra delgada en crema pleno `#E5E5E0`, esquinas rectas, sin flechas, carril transparente con una línea fina; se ilumina al pasar el cursor. Solo en computadoras (mouse y 768 px o más); en celulares queda la barra flotante del sistema. Verificado en Chrome 156 real. Chrome/Edge/Brave/Safari usan `::-webkit-scrollbar`; Firefox, `scrollbar-color` solo dentro de `@supports (-moz-appearance: none)`. **No poner `scrollbar-color` fuera de ese bloque**: en Chrome se hereda y anula el diseño (vuelve la barra gris y ancha del sistema).
 
 Orden oficial (confirmado por Dante): 01 Intro, 02 Her, 03 A Reason More To Smile, 04 Between Brothers, 05 Guiding Light, 06 Am I Dreaming?, 07 A Love Fool, 08 A Pretty Love, 09 A Quiet Heart, 10 The Moon is Beautiful Isn’t It?, 11 I’m In Love. Portada y galería siguen este orden.
+
+## 9. Revisión final antes de producción (9 de noviembre de 2026)
+
+- **Metadatos**: título, descripción, canonical, hreflang, robots, Open Graph y X completos en ambas páginas; 13 `rel="me"`.
+- **Imagen social de la galería**: antes era la portada cuadrada de *Her* (las redes la recortaban); ahora `public/og/gallery.jpg`, 1200×630, generada desde `scripts/og-gallery.html` (`node scripts/generate-social-images.mjs` genera las dos).
+- **Favicon**: `favicon.ico` con 48/32/16 px (Google exige múltiplo de 48), PNG de 96 px y `apple-touch-icon` de 180 px. Enlaces con `?v=2` para que los navegadores vuelvan a pedir el ícono (lo cachean, incluso "sin ícono"). `favicon.svg` (5.8 MB) sigue sin enlazarse.
+- **Manifest**: íconos ligeros `icon-192/512.png` (any) e `icon-maskable-192/512.png` (luna al 72 % sobre `#0c0a09`, para que Android no la recorte); colores `#0c0a09`. **Ojo con el peso**: Chrome descarga un ícono del manifest al cargar la página; el de 567 KB anterior bajaba Lighthouse móvil de 99 a 95.
+- `scripts/validar-seo.mjs` ahora revisa también favicon (múltiplo de 48), íconos enlazados, manifest (any + maskable) e imágenes sociales de 1200×630.
+- Resultado: Lighthouse móvil 99 (portada) y 98 (galería), 100 en accesibilidad, buenas prácticas y SEO; escritorio 100 en las cuatro.
 
 ## 8. Publicación en Cloudflare
 
