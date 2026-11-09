@@ -60,7 +60,39 @@ Ya configurada desde la sesión de bydan.art: HTTPS siempre, TLS 1.2, SSL estric
 
 ## 6. Pendientes
 
-1. Crear el Worker en Cloudflare (igual que bydan.art): repo `Dante6228/LandingPage`, rama `main`, build `npm run build`, deploy `npx wrangler deploy`, `NODE_VERSION=22`, dominio `alenjeynrod.com`.
-2. Search Console y Bing: verificar (el TXT de Google ya existe) y enviar `https://alenjeynrod.com/sitemap.xml`.
+1. Crear el Worker en Cloudflare (ver sección 8).
+2. Search Console y Bing: verificar (el TXT de Google ya existe en el DNS) y enviar `https://alenjeynrod.com/sitemap.xml`.
 3. Decidir el futuro de las secciones ocultas: newsletter, tienda de partituras y guestbook (este necesita un servicio nuevo: Formspree o un Worker con D1).
-4. Opcional: `favicon.svg` pesa 5.8 MB y no se enlaza; se puede rehacer ligero.
+4. La descripción para Google de la portada menciona "adquiere partituras oficiales", pero la tienda está oculta: conviene ajustarla si no se abrirá pronto.
+5. Opcional: `favicon.svg` pesa 5.8 MB y no se enlaza; se puede rehacer ligero.
+
+## 7. Rediseño de la portada (9 de noviembre de 2026)
+
+Propuesto por Claude y aprobado por Dante (puntos 1 a 7). Mismo contenido; cambia la presentación.
+
+1. ~~Fragmentos de 30 s en el tracklist~~: se probó y Dante lo quitó; el botón flotante de atmósfera ya reproduce una de sus maquetas más personales. Descartado.
+2. ~~La luna como portada~~: se probó y Dante prefirió la foto de perfil en círculo como estaba. Descartado.
+3. **Invitación escrita a escuchar**: "Escuchar en Spotify · Apple Music · YouTube Music" en Cormorant cursiva; Tidal, Deezer y Amazon Music en una línea discreta con íconos en un solo tono.
+4. **Notas del disco** (`LinerNotes.astro`): lista numerada con reglas finas; al abrir una pieza aparecen su ficha técnica en etiquetas pequeñas bajo el título (tonalidad, compás, tempo, de la galería) y su memoria. **Intro es la pista 01** (11 piezas).
+5. ~~Partitura como divisor~~: se probó y no le gustó a Dante. Descartado.
+6. **Oficio**: capitular real en la bio (`.drop-cap`), textos sin justificar, Bandsintown plegado si no hay fechas, vinilo con la paleta cálida del sitio (los colores de "Her" quedan como halo detrás del disco).
+7. **Live Sessions** con duración y mes de publicación (datos reales de YouTube).
+
+Orden oficial (confirmado por Dante): 01 Intro, 02 Her, 03 A Reason More To Smile, 04 Between Brothers, 05 Guiding Light, 06 Am I Dreaming?, 07 A Love Fool, 08 A Pretty Love, 09 A Quiet Heart, 10 The Moon is Beautiful Isn’t It?, 11 I’m In Love. Portada y galería siguen este orden.
+
+## 8. Publicación en Cloudflare
+
+Igual que bydan.art: Worker con recursos estáticos y Workers Builds conectado a GitHub.
+
+| Campo | Valor |
+|---|---|
+| Repositorio | `Dante6228/LandingPage`, rama `main` |
+| Project name | `alenjeynrod` (igual que `name` en `wrangler.jsonc`) |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Non-production branch deploy command | `npx wrangler versions upload` |
+| Path | `/` |
+| Variable de build | `NODE_VERSION = 22` |
+| Dominio | Settings → Domains & Routes → Custom domain `alenjeynrod.com` (sin `www`: ya redirige con 301) |
+
+Cada push a `main` se publica solo. Netlify ya fue dado de baja.

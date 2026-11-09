@@ -224,6 +224,36 @@ html.anim [data-aos='zoom-in']:not(.aos-animate) { transform: scale(0.6); }
 .yt-facade:hover .yt-play,
 .yt-facade:focus-visible .yt-play { transform: scale(1.08); background-color: rgba(229, 229, 224, 0.92); }
 
+/* Invitación a escuchar: enlaces escritos, con un subrayado fino que se aviva al pasar */
+.listen-link {
+  text-decoration-line: underline;
+  text-decoration-color: rgba(229, 229, 224, 0.2);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 7px;
+  transition: text-decoration-color 0.4s ease, color 0.4s ease;
+}
+.listen-link:hover,
+.listen-link:focus-visible {
+  text-decoration-color: rgba(229, 229, 224, 0.75);
+  color: #fff;
+}
+
+/* Capitular de la bio (antes un <span> flotante que dejaba "M  i viaje") */
+.drop-cap::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 3.4em;
+  line-height: 0.82;
+  margin: 0.06em 0.12em 0 0;
+  color: #E5E5E0;
+  opacity: 0.85;
+}
+
+/* Conciertos: el bloque solo aparece cuando hay fechas (ver Bandsintown.astro) */
+.bit-wrap { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 0.8s ease, opacity 0.8s ease; }
+.bit-wrap.has-events { grid-template-rows: 1fr; opacity: 1; }
+.bit-wrap > div { overflow: hidden; min-height: 0; }
+
 @media (prefers-reduced-motion: reduce) {
   .animate-breathe, .mote { animation: none !important; }
   .mote { display: none; }

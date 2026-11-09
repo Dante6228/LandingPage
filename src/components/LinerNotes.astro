@@ -1,0 +1,41 @@
+---
+// "Memorias del Álbum" como las notas interiores de un disco: lista numerada con reglas finas.
+// Al abrir una pieza aparecen su ficha técnica (tonalidad, compás, tempo; tomada de la galería)
+// en pequeñas etiquetas debajo del título, y su memoria.
+import { dreaming, gallerySongs } from '../data/site';
+
+/** "Eb Major • 6/8 • 108 BPM" → ["Eb Major", "6/8", "108 BPM"] */
+const specsOf = (galleryId: string) =>
+  (gallerySongs.find((s) => s.id === galleryId)?.meta ?? '')
+    .split('•')
+    .map((x) => x.trim())
+    .filter(Boolean);
+---
+
+<div class="w-full md:w-2/3 flex flex-col">
+  <h3 class="font-display text-lg text-cream/60 italic text-right px-2 mb-3">{dreaming.memoriesTitle}</h3>
+
+  <ol class="border-t border-white/10">
+    {dreaming.tracks.map((t) => (
+      <li class="border-b border-white/10">
+        <details class="group">
+          <summary class="flex items-baseline gap-4 px-2 py-4 cursor-pointer list-none">
+            <span class="shrink-0 w-7 font-mono text-xs text-cream/60">{t.n}</span>
+            <span class="flex-1 min-w-0 text-cream font-display text-lg leading-snug group-hover:pl-1 transition-all duration-300">{t.title}</span>
+            <span class="shrink-0 text-cream/50 group-open:rotate-45 transition-transform duration-300 text-xl font-light leading-none" aria-hidden="true">+</span>
+          </summary>
+          <div class="pl-[3.25rem] pr-8 pb-5 -mt-1">
+            <ul class="flex flex-wrap gap-1.5" aria-label={`Ficha técnica de ${t.title}`}>
+              {specsOf(t.galleryId).map((spec) => (
+                <li class="font-mono text-[10px] tracking-[0.14em] uppercase text-cream/75 border border-white/10 bg-white/[0.03] rounded-full px-2.5 py-0.5">
+                  {spec}
+                </li>
+              ))}
+            </ul>
+            <p class="mt-3 text-sm text-cream-dim font-light leading-relaxed text-pretty">{t.memory}</p>
+          </div>
+        </details>
+      </li>
+    ))}
+  </ol>
+</div>

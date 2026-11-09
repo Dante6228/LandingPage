@@ -6,7 +6,8 @@ import YouTubeFacade from '../components/YouTubeFacade.astro';
 import Bandsintown from '../components/Bandsintown.astro';
 import Newsletter from '../components/Newsletter.astro';
 import Shop from '../components/Shop.astro';
-import { Image, Picture, getImage } from 'astro:assets';
+import LinerNotes from '../components/LinerNotes.astro';
+import { Picture, getImage } from 'astro:assets';
 import { artist, platforms, dreaming, liveSessions, latestRelease, vinyl, socials } from '../data/site';
 import { IDS, SITE, absoluteUrl, albumNode, artistNode, latestReleaseNode, liveSessionNodes, personRef } from '../data/seo';
 
@@ -14,10 +15,13 @@ import profileImg from '../assets/img/Profile.jpg';
 import dreamingImg from '../assets/img/dreaming.jpg';
 import cover4Img from '../assets/img/Cover4.jpg';
 import vinylImg from '../assets/img/Vinyl2.png';
-import appleMusicIcon from '../assets/ico/AppleMusic.png';
-import youtubeMusicIcon from '../assets/ico/youtubeMusic.png';
 
-const icons: Record<string, ImageMetadata> = { 'AppleMusic.png': appleMusicIcon, 'youtubeMusic.png': youtubeMusicIcon };
+// Live Sessions: duración y mes de publicación (datos reales de YouTube).
+const videoMeta = (seconds: number, iso: string) => {
+  const d = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+  const m = new Date(iso).toLocaleDateString('es-MX', { month: 'long', year: 'numeric', timeZone: 'America/Mexico_City' });
+  return `${d} · ${m}`;
+};
 
 // Fondo: la misma foto, difuminada al 25 % de opacidad. Basta una versión ligera.
 const background = await getImage({ src: profileImg, width: 1600, format: 'webp', quality: 60 });
@@ -84,43 +88,29 @@ const profilePage = {
       </h2>
     </section>
 
-    <div class="w-full max-w-md grid grid-cols-1 gap-3 mb-24" data-aos="fade-up" data-aos-delay="100">
-      <a
-        href={platforms.spotify.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="bg-glass-bg backdrop-blur-2xl border border-glass-border shadow-glass rounded-xl p-4 flex items-center gap-4 group transition-all duration-500 hover:bg-[#fff0dc]/10 hover:-translate-y-0.5 hover:border-[#ffe6c8]/15"
-        aria-label="Escuchar en Spotify"
-      >
-        <img src={platforms.spotify.icon} class="w-7 opacity-90 group-hover:opacity-100 transition" alt="" width="28" height="28" />
-        <span class="text-cream group-hover:text-white font-light tracking-wide flex-1">{platforms.spotify.label}</span>
-        <svg class="w-4 h-4 text-cream-dim group-hover:text-cream transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </a>
-
-      <div class="grid grid-cols-2 gap-3">
-        {platforms.secondary.map((p) => (
-          <a
-            href={p.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="bg-glass-bg backdrop-blur-2xl border border-glass-border shadow-glass rounded-xl p-3 flex flex-col items-center gap-2 text-center transition-all duration-500 hover:bg-[#fff0dc]/10 hover:-translate-y-0.5 hover:border-[#ffe6c8]/15"
-          >
-            <Image src={icons[p.icon]} width={48} height={48} format="webp" class="w-6 h-auto opacity-80" alt="" />
-            <span class="text-xs text-cream-dim">{p.label}</span>
-          </a>
+    <nav aria-label="Escuchar la música de Alen Jeynrod" class="w-full max-w-2xl text-center mb-24" data-aos="fade-up" data-aos-delay="100">
+      <p class="font-display italic text-cream-dim text-lg">Escuchar en</p>
+      <p class="mt-1 font-display italic text-[1.75rem] md:text-[2rem] leading-snug text-cream">
+        {[{ label: 'Spotify', url: platforms.spotify.url }, ...platforms.secondary].map((p, i, all) => (
+          <Fragment>
+            <span class="whitespace-nowrap">
+              <a href={p.url} target="_blank" rel="noopener noreferrer" class="listen-link">{p.label}</a>
+              {i < all.length - 1 && <span class="mx-1.5 text-cream/40" aria-hidden="true">·</span>}
+            </span>{' '}
+          </Fragment>
         ))}
-      </div>
-
-      <div class="flex justify-center gap-6 mt-4 opacity-50 hover:opacity-90 transition duration-500">
+      </p>
+      <ul class="mt-6 flex justify-center flex-wrap gap-x-7 gap-y-2 text-[11px] tracking-[0.2em] uppercase text-cream-dim">
         {platforms.minor.map((p) => (
-          <a href={p.url} target="_blank" rel="noopener noreferrer" title={p.label} class="inline-flex items-center justify-center min-w-6 min-h-6">
-            <img src={p.icon} class="w-5 filter invert grayscale" alt={p.alt} width="20" height="20" />
-          </a>
+          <li>
+            <a href={p.url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 min-h-6 hover:text-cream transition-colors">
+              <img src={p.icon} class="w-4 h-4 invert grayscale opacity-80" alt="" width="16" height="16" />
+              <span>{p.alt}</span>
+            </a>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </nav>
 
     <section class="w-full max-w-4xl px-4 mb-24" data-aos="fade-up">
       <div class="text-center mb-10">
@@ -155,28 +145,11 @@ const profilePage = {
 
           <div class="bg-glass-bg backdrop-blur-md border border-glass-border p-6 rounded-xl relative z-10">
             <h3 class="font-display text-xl text-cream mb-2">{dreaming.conceptTitle}</h3>
-            <p class="text-sm text-cream-dim font-light leading-relaxed text-justify">{dreaming.concept}</p>
+            <p class="text-sm text-cream-dim font-light leading-relaxed hyphens-auto">{dreaming.concept}</p>
           </div>
         </div>
 
-        <div class="w-full md:w-2/3 flex flex-col gap-3">
-          <h3 class="font-display text-lg text-cream/60 mb-2 italic text-right px-2">{dreaming.memoriesTitle}</h3>
-
-          {dreaming.tracks.map((t) => (
-            <details class="group bg-glass-bg border border-glass-border rounded-xl open:bg-white/5 transition-all duration-500">
-              <summary class="flex items-center justify-between p-4 cursor-pointer list-none">
-                <div class="flex items-center gap-4">
-                  <span class="text-xs text-cream/60 font-mono">{t.n}</span>
-                  <span class="text-cream font-display text-lg group-hover:pl-2 transition-all duration-300">{t.title}</span>
-                </div>
-                <span class="text-cream/40 group-open:rotate-45 transition-transform duration-300 text-xl font-light" aria-hidden="true">+</span>
-              </summary>
-              <div class="px-4 pb-6 pt-2 text-sm text-cream-dim font-light leading-relaxed border-t border-white/5 mx-4 mt-2">
-                <p>{t.memory}</p>
-              </div>
-            </details>
-          ))}
-        </div>
+        <LinerNotes />
       </div>
     </section>
 
@@ -197,6 +170,7 @@ const profilePage = {
               <div>
                 <h3 class="text-xl font-display text-cream">{v.title}</h3>
                 <p class="text-xs text-cream-dim font-body mt-1">{v.subtitle}</p>
+                <p class="text-[11px] text-cream/60 font-mono mt-1.5 tracking-wide">{videoMeta(v.seconds, v.uploadDate)}</p>
               </div>
               <span class="text-xs text-cream/30 font-mono">{v.n}</span>
             </div>
@@ -234,13 +208,12 @@ const profilePage = {
     </section>
 
     <section class="w-full max-w-4xl mb-24 px-4" data-aos="fade-up">
-      <div class="relative backdrop-blur-xl border border-[#d37e74]/20 shadow-glass rounded-2xl p-6 md:p-10 flex flex-col md:flex-row items-center gap-8 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-[#e28b78] via-[#c47161] via-[#427370] to-[#93cba8] opacity-40 -z-10"></div>
-        <div class="absolute inset-0 bg-gradient-to-tr from-[#327a76]/50 via-[#a97c79]/40 to-[#f38d76]/50 -z-10"></div>
-        <div class="absolute inset-0 bg-gradient-to-bl from-[#cfe0b3]/30 via-transparent to-[#42887f]/40 -z-10"></div>
+      <div class="relative bg-glass-bg backdrop-blur-xl border border-glass-border shadow-glass rounded-2xl p-6 md:p-10 flex flex-col md:flex-row items-center gap-8 overflow-hidden">
 
         <div class="w-full md:w-2/5 flex items-center justify-center">
           <div class="relative group w-full max-w-[280px]">
+            <!-- Los colores de la portada de "Her" se quedan como un halo detrás del disco -->
+            <div class="absolute inset-[10%] rounded-full bg-[radial-gradient(circle,rgba(226,139,120,0.35),rgba(66,115,112,0.18)_55%,transparent_75%)] blur-2xl" aria-hidden="true"></div>
             <div class="relative aspect-auto w-full overflow-hidden">
               <Picture
                 src={vinylImg}
@@ -275,11 +248,11 @@ const profilePage = {
 
     <section class="w-full max-w-2xl text-center mb-24 px-4">
       <h2 class="text-3xl text-cream font-display mb-8 italic" data-aos="fade-up">El Artista</h2>
-      <div class="bg-glass-bg backdrop-blur-2xl border border-glass-border shadow-glass rounded-2xl p-8 md:p-12 text-cream-dim leading-relaxed space-y-6 text-sm md:text-base font-light text-justify relative overflow-hidden">
+      <div class="bg-glass-bg backdrop-blur-2xl border border-glass-border shadow-glass rounded-2xl p-8 md:p-12 text-cream-dim leading-relaxed space-y-6 text-sm md:text-base font-light text-left hyphens-auto relative overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500/20 to-transparent"></div>
 
-        <p data-aos="fade-up">
-          <span class="text-4xl float-left mr-3 mt-[-8px] font-display text-cream opacity-80">M</span>i viaje musical
+        <p class="drop-cap" data-aos="fade-up">
+          Mi viaje musical
           comenzó con la batería, pero encontré mi verdadera pasión en el silencio entre las teclas del piano.
           Mi estilo está fuertemente influenciado por la nostalgia de <em>Chopin</em> y las texturas modernas del <em>lofi</em>; mi
           música busca ser un refugio.

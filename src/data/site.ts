@@ -36,18 +36,21 @@ export const dreaming = {
   concept:
     '"Dreaming" no es solo música; es una colección de memorias que temía olvidar. Cada tecla pulsada es un intento de congelar el tiempo, de volver a sentir lo que sentí en esos momentos de soledad y revelación.',
   memoriesTitle: 'Memorias del Álbum',
+  // Intro es la pista 01 (Dante, 2026-11). `galleryId` enlaza con la ficha de /gallery: de ahí salen
+  // tonalidad, compás y tempo, que se muestran como etiquetas al abrir la pieza.
   tracks: [
-    { n: '01', title: 'Her', memory: 'Esta pieza nació en una tarde de lluvia. Representa la figura femenina no como una persona, sino como una emoción: la calidez que se siente al ser comprendido sin palabras.' },
-    { n: '02', title: 'A Reason More To Smile', memory: 'Esta pieza trata de retratar que incluso en los peores momentos siempre habrá algo que te ayude a encontrar la luz y la paz.' },
-    { n: '03', title: 'Between Brothers', memory: 'Un pequeño homenaje hecho con mucha delicadeza a quien ya no está.' },
-    { n: '04', title: 'Guiding Light', memory: 'Una pequeña dedicatoria a quien es mi inspiración día a día.' },
-    { n: '05', title: 'Am I Dreaming?', memory: 'Siempre me causó mucha curiosidad la nostalgia que siento al recordar tantos sueños que he tenido; creo que esta pieza retrata a la perfección ese sonido.' },
-    { n: '06', title: 'A Love Fool', memory: 'Un retrato del sentido de insuficiencia.' },
-    { n: '07', title: 'A Pretty Love', memory: 'Qué hermoso es permitirse sentir de la forma más profunda y pura posible; tal vez esta pieza retrate a la perfección ese sentimiento.' },
-    { n: '08', title: 'A Quiet Heart', memory: 'Una pieza que invita a encontrar calma y serenidad en medio del caos. Tal vez así puedas amar de una manera más profunda y consciente.' },
-    { n: '09', title: 'The Moon is Beautiful Isn’t It?', memory: 'Una vez leí esta frase y me pareció tan hermoso que esta sea la forma de declarar tu amor, que decidí retratarla en una pieza musical.' },
-    { n: '10', title: 'I’m In Love', memory: 'Así se siente amar.' },
-  ],
+    { n: '01', title: 'Intro', galleryId: '01', memory: 'El inicio del sueño. Una entrada etérea que prepara los sentidos para el viaje a través de las notas.' },
+    { n: '02', title: 'Her', galleryId: '02', memory: 'Esta pieza nació en una tarde de lluvia. Representa la figura femenina no como una persona, sino como una emoción: la calidez que se siente al ser comprendido sin palabras.' },
+    { n: '03', title: 'A Reason More To Smile', galleryId: '03', memory: 'Esta pieza trata de retratar que incluso en los peores momentos siempre habrá algo que te ayude a encontrar la luz y la paz.' },
+    { n: '04', title: 'Between Brothers', galleryId: '04', memory: 'Un pequeño homenaje hecho con mucha delicadeza a quien ya no está.' },
+    { n: '05', title: 'Guiding Light', galleryId: '05', memory: 'Una pequeña dedicatoria a quien es mi inspiración día a día.' },
+    { n: '06', title: 'Am I Dreaming?', galleryId: '06', memory: 'Siempre me causó mucha curiosidad la nostalgia que siento al recordar tantos sueños que he tenido; creo que esta pieza retrata a la perfección ese sonido.' },
+    { n: '07', title: 'A Love Fool', galleryId: '07', memory: 'Un retrato del sentido de insuficiencia.' },
+    { n: '08', title: 'A Pretty Love', galleryId: '08', memory: 'Qué hermoso es permitirse sentir de la forma más profunda y pura posible; tal vez esta pieza retrate a la perfección ese sentimiento.' },
+    { n: '09', title: 'A Quiet Heart', galleryId: '09', memory: 'Una pieza que invita a encontrar calma y serenidad en medio del caos. Tal vez así puedas amar de una manera más profunda y consciente.' },
+    { n: '10', title: 'The Moon is Beautiful Isn’t It?', galleryId: '10', memory: 'Una vez leí esta frase y me pareció tan hermoso que esta sea la forma de declarar tu amor, que decidí retratarla en una pieza musical.' },
+    { n: '11', title: 'I’m In Love', galleryId: '11', memory: 'Así se siente amar.' },
+  ] as { n: string; title: string; galleryId: string; memory: string }[],
 };
 
 // --- Live Sessions (YouTube) ---------------------------------------------------
@@ -153,8 +156,8 @@ export const gallerySongs: {
   { id: '01', title: 'Intro', meta: 'Eb Major • 155 BPM • 3:49', desc: 'El inicio del sueño. Una entrada etérea que prepara los sentidos para el viaje a través de las notas.', img: 'score_Intro.png', type: 'score' },
   { id: '02', title: 'Her', subtitle: '"Nacida de la improvisación"', meta: 'F# Major • 6/8 • 90 BPM', desc: 'Recuerdo grabar un demo muy emocionado y mandárselo a ella, diciéndole: "Así suenas en mi cabeza". Dos acordes mágicos que se convirtieron en una identidad.', img: 'Portrait.png', type: 'album', capsuleFile: '/audio/ambience.mp3' },
   { id: '03', title: 'A Reason More To Smile', meta: 'Eb Major • 6/8 • 108 BPM', desc: 'Un abrazo musical para mi mamá en días difíciles. La sensación de paz imposible de poner en palabras.', img: 'Cover4.jpg', type: 'album' },
-  { id: '04', title: 'Guiding Light', subtitle: '"Homenaje a mi papá"', meta: 'F Major • 6/8 • 98 BPM', desc: 'Cuando su fortaleza se quebró, sentí que mi mundo también lo hacía. Esta melodía busca recordar que su luz siempre será mi guía.', img: 'Guiding.png', type: 'score' },
-  { id: '05', title: 'Between Brothers', meta: 'F Major • 6/8 • 100 BPM', desc: 'Recuerdo para mi tío al que nunca conocí del todo. Quise rendirle un homenaje y guardar entre notas su ser.', img: 'Cover2.png', type: 'album' },
+  { id: '04', title: 'Between Brothers', meta: 'F Major • 6/8 • 100 BPM', desc: 'Recuerdo para mi tío al que nunca conocí del todo. Quise rendirle un homenaje y guardar entre notas su ser.', img: 'Cover2.png', type: 'album' },
+  { id: '05', title: 'Guiding Light', subtitle: '"Homenaje a mi papá"', meta: 'F Major • 6/8 • 98 BPM', desc: 'Cuando su fortaleza se quebró, sentí que mi mundo también lo hacía. Esta melodía busca recordar que su luz siempre será mi guía.', img: 'Guiding.png', type: 'score' },
   { id: '06', title: 'Am I Dreaming?', meta: 'G Major • 6/8 • 94 BPM', desc: 'Esto se siente como flotar en un sueño. Un viaje contemplativo, lento y meloso, sin un clímax claro.', img: 'ImDreaming.png', type: 'score' },
   { id: '07', title: 'A Love Fool', meta: 'G Major • 6/8 • 90 BPM', desc: 'El eco de un amor que nunca encontró su reflejo. Inspirada en Radiohead, retrata esa mezcla de ternura y resignación.', img: 'Cover3.jpg', type: 'album' },
   { id: '08', title: 'A Pretty Love', meta: 'F# Major • 4/4 • 138 BPM', desc: 'Una oda íntima a mi forma de amar. Nació como un preludio pero cobró vida propia con un motivo melódico que me encantó desde el inicio.', img: 'Pretty.png', type: 'score' },

@@ -29,10 +29,10 @@ Stack: **Astro 5** (estático, sin adapter) + **Tailwind CSS v4** vía `@tailwin
 
 - **`src/data/site.ts`**: TODO el contenido (textos, enlaces, pistas, videos, galería). Cambiar un texto = cambiarlo aquí. Secciones ocultas con `visible: false`: newsletter (Formspree), tienda de partituras (Shopify) y guestbook de la galería (usaba Netlify Forms, que no funciona en Cloudflare).
 - **`src/data/seo.ts`**: fuente única de SEO. `SITE`, `canonicalUrl()`, `IDS` estables (`/#website`, `/#alenjeynrod`, `/#dreaming`; la persona es `https://bydan.art/#dante`, se referencia, no se duplica), `officialProfiles` (sameAs y `rel="me"`), constructores de nodos JSON-LD y `jsonLdString()` (escapa `<`).
-  - Grafo: portada = `ProfilePage` + `MusicGroup` + `MusicAlbum` (Dreaming, 10 pistas) + `MusicRecording` (A Reason More To Smile) + 6 `VideoObject`; galería = `CollectionPage` + 11 `MusicComposition` (tonalidad tomada de la ficha) + migas.
+  - Grafo: portada = `ProfilePage` + `MusicGroup` + `MusicAlbum` (Dreaming, 11 pistas con Intro) + `MusicRecording` (A Reason More To Smile) + 6 `VideoObject` (con `uploadDate` y `duration` reales de YouTube); galería = `CollectionPage` + 11 `MusicComposition` (tonalidad tomada de la ficha) + migas.
   - **No inventar datos**: sin fechas de lanzamiento, géneros ni premios que no estén en el sitio.
 - **`src/layouts/BaseLayout.astro`**: todo el `<head>` (canonical, hreflang, robots, OG, Twitter, `rel="me"`, íconos, manifest, JSON-LD, fuentes precargadas) y el script de aparición.
-- **Componentes**: `Dust` (polvo flotante), `AudioToggle` (atmósfera, `preload="none"`), `YouTubeFacade` (miniatura WebP; el iframe de youtube-nocookie solo se crea al pulsar), `Bandsintown` (su script se descarga al acercarse al pie), `Newsletter` y `Shop` (no renderizan nada si están ocultos).
+- **Componentes**: `LinerNotes` (notas del disco: ficha técnica en etiquetas y memoria al abrir cada pieza), `Dust` (polvo flotante), `AudioToggle` (atmósfera, `preload="none"`), `YouTubeFacade` (miniatura WebP; el iframe de youtube-nocookie solo se crea al pulsar), `Bandsintown` (su script se descarga al acercarse al pie), `Newsletter` y `Shop` (no renderizan nada si están ocultos).
 - **Animaciones**: atributos `data-aos="fade-up|fade-down|zoom-in"` (+ `data-aos-delay`, `data-aos-duration`) con el mismo efecto que AOS, implementados en `global.css` y el script del layout. Solo con `html.anim` (JS y sin "reducir movimiento").
 - **Imágenes**: originales en `src/assets/img/` (se optimizan a AVIF/WebP con `<Picture>`); íconos PNG en `src/assets/ico/`; SVG en `public/ico/`. Los nombres de archivo distinguen mayúsculas (Cloudflare es Linux).
 - **Endpoints**: `sitemap.xml.ts` (con imágenes), `llms.txt.ts` (generado de los datos), `public/robots.txt` (bots de IA explícitos; `Content-Signal` comentado).
@@ -42,6 +42,14 @@ Stack: **Astro 5** (estático, sin adapter) + **Tailwind CSS v4** vía `@tailwin
 
 Portada 99/100/100/100 (antes 0/90/93/100; 431 KB, antes 19 MB). Galería 99/100/100/100 (antes 71, LCP 14 s, 38 MB). Escritorio 100 en las cuatro.
 
+## Decisiones de Dante (no volver a proponer)
+
+- Foto de perfil en círculo de 128 px (la "luna como portada" se probó y se descartó).
+- Sin divisores de partitura entre secciones (probado y descartado).
+- Sin fragmentos de audio en el tracklist: el único sonido es la maqueta del botón de atmósfera.
+- Orden oficial de *Dreaming*: 01 Intro, 02 Her, 03 A Reason More To Smile, 04 Between Brothers, 05 Guiding Light, 06 Am I Dreaming?, 07 A Love Fool, 08 A Pretty Love, 09 A Quiet Heart, 10 The Moon is Beautiful Isn’t It?, 11 I’m In Love. *Dreaming* es "Próximamente", sin fecha.
+- Secciones ocultas: newsletter, tienda de partituras y guestbook.
+
 ## Registro
 
-Ver [`docs/REGISTRO.md`](docs/REGISTRO.md): migración, decisiones y pendientes.
+Ver [`docs/REGISTRO.md`](docs/REGISTRO.md): migración, rediseño, decisiones y pendientes.

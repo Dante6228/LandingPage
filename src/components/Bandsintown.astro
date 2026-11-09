@@ -1,26 +1,48 @@
 ---
 // Widget de conciertos de Bandsintown. Su script (de terceros) solo se descarga cuando el pie
-// se acerca a la pantalla: no compite con la carga inicial.
+// se acerca a la pantalla. El bloque se queda plegado y solo se despliega si hay fechas:
+// sin conciertos no se muestra una caja vacía con "No Upcoming Shows".
 import { bandsintown } from '../data/site';
 ---
 
-<div class="w-full bg-glass-bg backdrop-blur-2xl border border-glass-border shadow-glass rounded-xl p-6 overflow-hidden" id="bit-wrap">
-  <a
-    class="bit-widget-initializer"
-    data-artist-name={bandsintown.artistId}
-    data-background-color="rgba(0,0,0,0)"
-    data-separator-color="rgba(255,255,255,0.1)"
-    data-text-color="#E5E5E0"
-    data-font="Montserrat"
-    data-auto-style="true"
-    data-display-local-dates="true"
-    data-display-past-dates="false"
-    data-display-details="false"
-    data-display-lineup="false"></a>
+<div class="bit-wrap w-full" id="bit-wrap">
+  <div>
+    <div class="w-full bg-glass-bg backdrop-blur-2xl border border-glass-border shadow-glass rounded-xl p-6 overflow-hidden" id="bit-box">
+      <a
+        class="bit-widget-initializer"
+        data-artist-name={bandsintown.artistId}
+        data-background-color="rgba(0,0,0,0)"
+        data-separator-color="rgba(255,255,255,0.1)"
+        data-text-color="#E5E5E0"
+        data-font="Montserrat"
+        data-auto-style="true"
+        data-display-local-dates="true"
+        data-display-past-dates="false"
+        data-display-details="false"
+        data-display-lineup="false"></a>
+    </div>
+  </div>
 </div>
 
 <script>
   const wrap = document.getElementById('bit-wrap');
+  const box = document.getElementById('bit-box');
+
+  // Decide si hay conciertos cuando el widget termina de pintar.
+  if (wrap && box) {
+    const check = () => {
+      const text = (box.textContent || '').trim();
+      if (!text) return false;
+      const empty = /no upcoming|no hay (próximos|proximos)|no events/i.test(text);
+      wrap.classList.toggle('has-events', !empty);
+      return true;
+    };
+    const mo = new MutationObserver(() => {
+      if (check()) setTimeout(check, 800); // el widget a veces pinta en dos pasos
+    });
+    mo.observe(box, { childList: true, subtree: true, characterData: true });
+  }
+
   const load = () => {
     if (document.querySelector('script[data-bit]')) return;
     const s = document.createElement('script');
