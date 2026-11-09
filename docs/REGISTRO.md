@@ -3,12 +3,12 @@
 Bitácora de la migración a la arquitectura de bydan.art y estado del sitio.
 
 - **Fecha:** 9 de noviembre de 2026
-- **Rama:** `migracion-astro` (sin commit; `main` conserva el sitio anterior en HTML)
+- **Estado:** todo en `main` (única rama); falta crear el Worker en Cloudflare
 - **Repo:** https://github.com/Dante6228/LandingPage
 
 ## 1. Qué se hizo
 
-Migración del sitio en HTML estático + Tailwind 3 a **Astro 5 + Tailwind 4**, con la misma arquitectura, SEO, seguridad y despliegue que bydan.art. **Contenido y look sin cambios**: textos (con sus erratas), enlaces, pistas, videos, orden de secciones, colores, tipografías, tarjetas translúcidas, polvo y fondo de la luna.
+Migración del sitio en HTML estático + Tailwind 3 a **Astro 5 + Tailwind 4**, con la misma arquitectura, SEO, seguridad y despliegue que bydan.art. **Contenido y look sin cambios**: textos (solo se corrigieron erratas de ortografía), enlaces, pistas, videos, orden de secciones, colores, tipografías, tarjetas translúcidas, polvo y fondo de la luna.
 
 | Antes | Ahora |
 |---|---|
@@ -33,6 +33,12 @@ Migración del sitio en HTML estático + Tailwind 3 a **Astro 5 + Tailwind 4**, 
 
 ## 3. SEO y GEO
 
+- Validación: `node scripts/validar-seo.mjs` (grafo resuelto, campos obligatorios de Google, canonical/OG, sitemap, robots). Las 6 Live Sessions llevan su fecha real de publicación y duración tomadas de YouTube (`uploadDate` es obligatorio para videos).
+- Erratas corregidas: "batería", "Qué hermoso", ", mi primer álbum", "la luz y la paz" y puntuación en tres memorias y en la bio.
+- El título de la galería incluye el nombre: "Dreaming | The Experience Hub · Alen Jeynrod".
+- "Último lanzamiento" enlaza a la canción en Spotify (`track/24A9ja01prj5mEfEArazix`); el botón principal sigue en el disco.
+- Netlify dado de baja por Dante: ya no hay copia que compita con el dominio.
+
 - `<head>` completo: canonical, `hreflang es-MX`/`x-default`, robots con `max-image-preview:large`, Open Graph y X con imagen 1200×630 propia (`public/og/default.jpg`), `rel="me"` a bydan.art y a todos los perfiles oficiales.
 - Datos estructurados en un solo `@graph` (ver `CLAUDE.md`). Alen Jeynrod (`https://alenjeynrod.com/#alenjeynrod`) queda ligado a Dante (`https://bydan.art/#dante`) como miembro y fundador, y a la entidad de bydan.art.
 - `sitemap.xml` con imágenes, `llms.txt`, `robots.txt` con bots de IA.
@@ -54,9 +60,7 @@ Ya configurada desde la sesión de bydan.art: HTTPS siempre, TLS 1.2, SSL estric
 
 ## 6. Pendientes
 
-1. Revisar la rama `migracion-astro`, y con orden de Dante: commit, merge a `main` y push.
-2. Crear el Worker en Cloudflare (igual que bydan.art): repo `Dante6228/LandingPage`, rama `main`, build `npm run build`, deploy `npx wrangler deploy`, `NODE_VERSION=22`, dominio `alenjeynrod.com`.
-3. Search Console y Bing: verificar (el TXT de Google ya existe) y enviar `https://alenjeynrod.com/sitemap.xml`.
-4. Dar de baja o redirigir `alenjeynrod.netlify.app` para que no compita con el dominio (contenido duplicado).
-5. Decidir el futuro de las secciones ocultas: newsletter, tienda de partituras y guestbook (este necesita un servicio nuevo: Formspree o un Worker con D1).
-6. Opcional: `favicon.svg` pesa 5.8 MB y no se enlaza; se puede rehacer ligero.
+1. Crear el Worker en Cloudflare (igual que bydan.art): repo `Dante6228/LandingPage`, rama `main`, build `npm run build`, deploy `npx wrangler deploy`, `NODE_VERSION=22`, dominio `alenjeynrod.com`.
+2. Search Console y Bing: verificar (el TXT de Google ya existe) y enviar `https://alenjeynrod.com/sitemap.xml`.
+3. Decidir el futuro de las secciones ocultas: newsletter, tienda de partituras y guestbook (este necesita un servicio nuevo: Formspree o un Worker con D1).
+4. Opcional: `favicon.svg` pesa 5.8 MB y no se enlaza; se puede rehacer ligero.

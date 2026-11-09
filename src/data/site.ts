@@ -67,7 +67,7 @@ export const latestRelease = {
   title: 'A Reason More To Smile',
   text: 'Una composición dedicada a encontrar luz incluso en los peores momentos.',
   cta: 'Escuchar Ahora',
-  url: 'https://open.spotify.com/intl-es/album/5aWXFxLoQ2CCMoV4303uDw?si=62FUlM_oQxShfmc0n5B81A',
+  url: 'https://open.spotify.com/intl-es/track/24A9ja01prj5mEfEArazix?si=db101308463f4f68',
   coverAlt: 'Portada del sencillo A Reason More To Smile',
 };
 

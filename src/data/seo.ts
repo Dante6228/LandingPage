@@ -3,7 +3,7 @@
 // Regla: el JSON-LD solo dice lo que la página muestra o datos verificables (perfiles oficiales).
 // Nada inventado: sin fechas de lanzamiento, géneros ni premios que no estén en el sitio.
 // =============================================================================
-import { artist, dreaming, latestRelease, liveSessions, platforms, socials, bandsintown, gallerySongs } from './site';
+import { artist, dreaming, latestRelease, liveSessions, socials, bandsintown, gallerySongs } from './site';
 
 export const SITE = 'https://alenjeynrod.com';
 export const SITE_NAME = 'Alen Jeynrod';
@@ -117,7 +117,8 @@ export function latestReleaseNode(imageUrl?: string) {
     byArtist: { '@id': IDS.artist },
     url: latestRelease.url,
     ...(imageUrl ? { image: imageUrl } : {}),
-    sameAs: [platforms.spotify.url],
+    // Enlace de la canción en Spotify, sin el parámetro de rastreo ?si=
+    sameAs: [latestRelease.url.split('?')[0]],
   };
 }
 
