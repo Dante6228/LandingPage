@@ -1,0 +1,75 @@
+---
+// "Cartas desde el Piano" (Formspree). Oculta en el sitio anterior: no se renderiza mientras newsletter.visible sea false.
+// Al activarla, agregar https://formspree.io a connect-src y form-action en public/_headers.
+import { newsletter } from '../data/site';
+---
+
+{newsletter.visible && (
+  <section class="w-full max-w-2xl text-center mb-24 px-4" data-aos="fade-up">
+    <div class="relative py-8">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-transparent to-cream/20"></div>
+      <h3 class="text-2xl font-display italic text-cream mb-4">{newsletter.title}</h3>
+      <p class="text-sm text-cream-dim font-light leading-relaxed mb-6">{newsletter.text}</p>
+      <form id="newsletter-form" action={newsletter.action} method="POST" class="flex flex-col sm:flex-row gap-3 relative">
+        <label for="email-input" class="sr-only">Correo electrónico</label>
+        <input
+          type="email"
+          name="email"
+          id="email-input"
+          placeholder={newsletter.placeholder}
+          required
+          class="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm text-cream placeholder-cream/30 focus:outline-none focus:border-cream/30 focus:bg-white/10 transition disabled:opacity-50"
+        />
+        <button
+          type="submit"
+          id="submit-btn"
+          class="px-6 py-2 bg-cream text-warm-black font-display italic text-sm rounded-lg hover:bg-white transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {newsletter.button}
+        </button>
+        <p id="form-status" class="absolute -bottom-10 left-0 w-full text-xs font-light transition-opacity duration-500 opacity-0" role="status"></p>
+      </form>
+    </div>
+  </section>
+)}
+
+{newsletter.visible && (
+  <script>
+    const form = document.getElementById('newsletter-form') as HTMLFormElement | null;
+    const status = document.getElementById('form-status');
+    const btn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+    const input = document.getElementById('email-input') as HTMLInputElement | null;
+    const base = 'absolute -bottom-10 left-0 w-full text-xs font-light transition-opacity duration-500 ';
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!btn || !input || !status) return;
+      const originalBtnText = btn.innerText;
+      const reset = () => { btn.innerText = originalBtnText; btn.disabled = false; input.disabled = false; };
+      btn.innerText = 'Enviando...';
+      btn.disabled = true;
+      input.disabled = true;
+      try {
+        const response = await fetch(form.action, { method: form.method, body: new FormData(form), headers: { Accept: 'application/json' } });
+        if (response.ok) {
+          status.textContent = 'Gracias por escuchar. Pronto tendrás noticias mías.';
+          status.className = base + 'text-green-300/80 opacity-100';
+          form.reset();
+          btn.innerText = 'Suscrito';
+          setTimeout(() => { status.classList.replace('opacity-100', 'opacity-0'); reset(); }, 4000);
+        } else {
+          const errorData = await response.json();
+          status.textContent = Object.hasOwn(errorData, 'errors')
+            ? errorData.errors.map((e: { message: string }) => e.message).join(', ')
+            : 'Hubo un problema al enviar.';
+          status.className = base + 'text-red-300/80 opacity-100';
+          reset();
+        }
+      } catch {
+        status.textContent = 'Error de conexión. Inténtalo de nuevo.';
+        status.className = base + 'text-red-300/80 opacity-100';
+        reset();
+      }
+    });
+  </script>
+)}

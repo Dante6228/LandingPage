@@ -1,0 +1,230 @@
+@import 'tailwindcss';
+
+/* =============================================================================
+   Alen Jeynrod — sistema visual
+   Migrado de tailwind.config.js (v3) a tokens de Tailwind v4. Mismo look que el sitio anterior.
+   ============================================================================= */
+
+/* Tipografías auto-hospedadas (subconjunto latino, variables). Antes venían de Google Fonts. */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 200 500;
+  font-display: swap;
+  src: url('/fonts/montserrat-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  --color-cream: #E5E5E0;
+  --color-cream-dim: #A8A8A0;
+  --color-warm-black: #0c0a09;
+  --color-glass-bg: rgba(30, 25, 22, 0.5);
+  --color-glass-border: rgba(255, 230, 200, 0.05);
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Montserrat', sans-serif;
+
+  --background-image-noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  --background-image-vignette: radial-gradient(circle at 50% 30%, rgba(60, 40, 20, 0.15), rgba(12, 10, 9, 0.9));
+
+  --shadow-glass: 0 10px 40px -10px rgba(0, 0, 0, 0.7);
+
+  --animate-breathe: breathe 20s ease-in-out infinite;
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+}
+
+/* Tailwind v4 cambió el color de borde por defecto a currentColor; v3 usaba gray-200.
+   Se conserva el de v3 para que ningún borde cambie de aspecto. */
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+  button:not(:disabled), [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* ---- Componentes (antes en src/input.css con @apply) ---- */
+@layer components {
+  .card-frame {
+    @apply w-full bg-glass-bg border border-white/5 rounded-xs p-2 shadow-2xl relative overflow-hidden;
+  }
+
+  .score-card {
+    @apply w-full bg-glass-bg rounded-xs relative overflow-hidden max-w-xs md:max-w-xl aspect-[3/4] bg-[#1a130f] border border-white/10 p-3
+      shadow-[0_20px_50px_-12px_rgba(0,0,0,0.7)] group-hover:border-white/20 transition-all duration-1000 ease-out;
+  }
+  .score-card::after {
+    content: '';
+    @apply absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-1000;
+    background: radial-gradient(circle at center, transparent 40%, rgba(15, 10, 8, 0.6) 100%);
+  }
+  .score-card:hover::after {
+    opacity: 0.4;
+  }
+
+  .score-img {
+    @apply w-full h-full object-cover invert sepia-[.80] saturate-[.80] contrast-125 brightness-90 mix-blend-screen opacity-80
+      group-hover:opacity-100 group-hover:scale-[1.03] group-hover:brightness-110 group-hover:sepia-[.60]
+      transition duration-1000 ease-in-out;
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  /* En v3 era "@apply card-frame …"; v4 no permite aplicar una clase de componente: se expande. */
+  .album-card {
+    @apply w-full bg-glass-bg border border-white/5 rounded-xs p-2 shadow-2xl relative overflow-hidden max-w-xs md:max-w-lg aspect-square;
+  }
+
+  .album-img {
+    @apply w-full h-full object-cover opacity-90 group-hover:opacity-100 transition duration-700 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)];
+  }
+}
+
+/* ---- Antes en src/index.css ---- */
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.video-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+.video-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  margin: 0 10%;
+}
+.video-scroll::-webkit-scrollbar-thumb {
+  background: rgba(229, 229, 224, 0.3);
+  border-radius: 10px;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+.video-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(229, 229, 224, 0.8);
+}
+
+.dust-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -5;
+  pointer-events: none;
+  overflow: hidden;
+}
+.mote {
+  position: absolute;
+  background: #E5E5E0;
+  border-radius: 50%;
+  opacity: 0;
+  animation: float-mote linear infinite;
+}
+@keyframes float-mote {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  20% { opacity: 0.4; }
+  80% { opacity: 0.5; }
+  100% { transform: translateY(-100px) translateX(20px); opacity: 0; }
+}
+
+/* Galería: polvo con su propia curva (como en gallery/index.html) */
+.gallery-dust .mote {
+  width: 2px;
+  height: 2px;
+  animation-name: float-mote-gallery;
+}
+@keyframes float-mote-gallery {
+  0% { opacity: 0; transform: translateY(0); }
+  50% { opacity: 0.5; }
+  100% { opacity: 0; transform: translateY(-100px); }
+}
+
+/* Galería: cápsula del tiempo y reproductor nativo (antes en el <style> de gallery/index.html) */
+.song-card { transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+.hide-scroll::-webkit-scrollbar { display: none; }
+.hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+.capsule-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.8s ease-in-out, opacity 0.5s ease;
+  opacity: 0;
+}
+.capsule-open { max-height: 520px; opacity: 1; }
+audio::-webkit-media-controls-panel { background-color: transparent; backdrop-filter: none; border: 0; }
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display { color: #E5E5E0; font-family: 'Montserrat', sans-serif; font-size: 10px; }
+
+/* =============================================================================
+   Animaciones de aparición: reemplazan la librería AOS (que se cargaba desde unpkg)
+   con el mismo efecto: misma distancia (100px), duración (1.2 s), curva y "solo una vez".
+   Solo con html.anim (JS activo y sin "reducir movimiento"): sin JS todo se ve normal.
+   ============================================================================= */
+html.anim [data-aos] {
+  transition-property: opacity, transform;
+  transition-duration: var(--aos-duration, 1200ms);
+  transition-timing-function: ease;
+  transition-delay: var(--aos-delay, 0ms);
+}
+html.anim [data-aos]:not(.aos-animate) { opacity: 0; }
+html.anim [data-aos='fade-up']:not(.aos-animate) { transform: translate3d(0, 100px, 0); }
+html.anim [data-aos='fade-down']:not(.aos-animate) { transform: translate3d(0, -100px, 0); }
+html.anim [data-aos='zoom-in']:not(.aos-animate) { transform: scale(0.6); }
+
+/* Foco de teclado visible (crema, discreto) */
+:where(a, button, summary, [tabindex], input, textarea):focus-visible {
+  outline: 1.5px solid #E5E5E0;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 70;
+  padding: 0.5rem 0.9rem;
+  background: #0c0a09;
+  color: #E5E5E0;
+  border: 1px solid rgba(229, 229, 224, 0.3);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+.skip-link:focus-visible { transform: none; }
+
+/* Video de YouTube con "fachada": miniatura hasta que se pulsa (no carga el reproductor de entrada) */
+.yt-facade { cursor: pointer; }
+.yt-facade .yt-play {
+  transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
+}
+.yt-facade:hover .yt-play,
+.yt-facade:focus-visible .yt-play { transform: scale(1.08); background-color: rgba(229, 229, 224, 0.92); }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-breathe, .mote { animation: none !important; }
+  .mote { display: none; }
+}

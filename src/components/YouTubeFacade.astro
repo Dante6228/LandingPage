@@ -1,0 +1,48 @@
+---
+// Video de YouTube con "fachada": muestra la miniatura y carga el reproductor solo al pulsarla.
+// Seis iframes de YouTube pesan varios MB de JavaScript; así la página no los descarga hasta que alguien los pide.
+// Usa youtube-nocookie (sin cookies hasta reproducir).
+interface Props {
+  id: string;
+  title: string;
+}
+const { id, title } = Astro.props;
+---
+
+<button
+  type="button"
+  class="yt-facade absolute top-0 left-0 w-full h-full"
+  data-yt={id}
+  data-title={title}
+  aria-label={`Reproducir: ${title}`}
+>
+  <img
+    src={`https://i.ytimg.com/vi_webp/${id}/hqdefault.webp`}
+    alt=""
+    width="480"
+    height="360"
+    loading="lazy"
+    decoding="async"
+    class="absolute inset-0 w-full h-full object-cover opacity-80"
+  />
+  <span class="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+    <span class="yt-play w-16 h-11 rounded-xl bg-[#0c0a09]/75 border border-white/10 flex items-center justify-center">
+      <svg viewBox="0 0 24 24" class="w-6 h-6 text-cream ml-0.5" fill="currentColor"><path d="M8 5v14l11-7z"></path></svg>
+    </span>
+  </span>
+</button>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.yt-facade').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.className = 'absolute top-0 left-0 w-full h-full';
+      iframe.src = `https://www.youtube-nocookie.com/embed/${btn.dataset.yt}?autoplay=1`;
+      iframe.title = btn.dataset.title || '';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.setAttribute('frameborder', '0');
+      btn.replaceWith(iframe);
+    }, { once: true });
+  });
+</script>

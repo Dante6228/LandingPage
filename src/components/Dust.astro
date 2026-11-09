@@ -1,0 +1,40 @@
+---
+// Partículas de polvo flotando (30), como en el sitio anterior. `variant="gallery"` usa la curva de la galería.
+interface Props {
+  variant?: 'home' | 'gallery';
+}
+const { variant = 'home' } = Astro.props;
+---
+
+<div
+  id="dust-container"
+  class={variant === 'gallery' ? 'gallery-dust fixed inset-0 w-full h-full -z-5 pointer-events-none overflow-hidden' : 'dust-container'}
+  data-variant={variant}
+  aria-hidden="true"
+>
+</div>
+
+<script>
+  const container = document.getElementById('dust-container');
+  if (container && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const gallery = container.dataset.variant === 'gallery';
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 30; i++) {
+      const mote = document.createElement('div');
+      mote.className = 'mote';
+      mote.style.left = `${Math.random() * 100}%`;
+      mote.style.top = `${Math.random() * 100}%`;
+      mote.style.animationDuration = `${Math.random() * 10 + 10}s`;
+      if (gallery) {
+        mote.style.opacity = String(Math.random() * 0.3);
+      } else {
+        const size = Math.random() * 2 + 1;
+        mote.style.width = `${size}px`;
+        mote.style.height = `${size}px`;
+        mote.style.animationDelay = `-${Math.random() * 5}s`;
+      }
+      frag.appendChild(mote);
+    }
+    container.appendChild(frag);
+  }
+</script>

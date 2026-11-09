@@ -1,0 +1,37 @@
+# Cabeceras para Cloudflare Workers (recursos estáticos). Mismo esquema que bydan.art.
+#
+# CSP: el sitio solo habla con YouTube (videos al pulsarlos), Bandsintown (widget de conciertos)
+# y Cloudflare Web Analytics. 'unsafe-inline' en script-src es necesario por los scripts en línea de Astro.
+# Si se activan las secciones ocultas, agregar:
+#   newsletter (Formspree): connect-src y form-action https://formspree.io
+#   tienda (Shopify):       script-src https://sdks.shopifycdn.com; connect-src y frame-src https://*.myshopify.com
+
+/*
+  Strict-Transport-Security: max-age=31536000
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://widgetv3.bandsintown.com https://rest.bandsintown.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://widgetv3.bandsintown.com; img-src 'self' data: https:; font-src 'self' data: https://widgetv3.bandsintown.com; media-src 'self'; connect-src 'self' https://*.bandsintown.com https://cloudflareinsights.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com https://*.bandsintown.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fuentes: inmutables. Si algún día cambian, se renombra el archivo (y su @font-face y preload).
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Archivos con nombre fijo: 1 día y luego se revalida en segundo plano (nadie ve versiones viejas más de 24 h).
+# Las páginas HTML no llevan regla: se sirven con max-age=0, must-revalidate (siempre la última versión).
+/audio/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/ico/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/og/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8

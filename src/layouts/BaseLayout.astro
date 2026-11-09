@@ -1,0 +1,168 @@
+---
+import '../styles/global.css';
+import {
+  DEFAULT_OG_IMAGE,
+  IDS,
+  LOCALE,
+  SITE_NAME,
+  absoluteUrl,
+  canonicalUrl as toCanonical,
+  graph,
+  jsonLdString,
+  officialProfiles,
+  websiteNode,
+} from '../data/seo';
+
+interface Props {
+  title: string;
+  description: string;
+  ogType?: 'website' | 'profile' | 'music.album';
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+  noindex?: boolean;
+  /** Nodos JSON-LD propios de la página; se unen al grafo con WebSite. */
+  jsonLd?: object[];
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description,
+  ogType = 'website',
+  ogImage,
+  ogImageAlt,
+  ogImageWidth,
+  ogImageHeight,
+  noindex = false,
+  jsonLd = [],
+  bodyClass = '',
+} = Astro.props;
+
+const canonicalUrl = toCanonical(Astro.url.pathname);
+const usingDefaultImage = !ogImage;
+const ogImageUrl = absoluteUrl(ogImage || DEFAULT_OG_IMAGE.url);
+const imageAlt = ogImageAlt || (usingDefaultImage ? DEFAULT_OG_IMAGE.alt : title);
+const imageWidth = ogImageWidth ?? (usingDefaultImage ? DEFAULT_OG_IMAGE.width : undefined);
+const imageHeight = ogImageHeight ?? (usingDefaultImage ? DEFAULT_OG_IMAGE.height : undefined);
+const ogImageType = /\.png($|\?)/i.test(ogImageUrl) ? 'image/png' : /\.webp($|\?)/i.test(ogImageUrl) ? 'image/webp' : 'image/jpeg';
+
+const robots = noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+
+const pageTypes = ['WebPage', 'ProfilePage', 'CollectionPage', 'AboutPage'];
+const hasPageNode = jsonLd.some((n: any) => pageTypes.includes(n?.['@type']));
+const webPageNode = {
+  '@type': 'WebPage',
+  '@id': `${canonicalUrl}#webpage`,
+  url: canonicalUrl,
+  name: title,
+  description,
+  inLanguage: LOCALE,
+  isPartOf: { '@id': IDS.website },
+  about: { '@id': IDS.artist },
+  primaryImageOfPage: { '@type': 'ImageObject', url: ogImageUrl },
+};
+const structuredData = graph([websiteNode(), ...(!noindex && !hasPageNode ? [webPageNode] : []), ...jsonLd]);
+
+// Verificación de buscadores (si se necesitara además del registro DNS).
+const googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bingVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION;
+---
+
+<!doctype html>
+<html lang={LOCALE}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Alen Jeynrod (Dante Alejandro Viveros Rodríguez)" />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#0c0a09" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- Animaciones de aparición: solo con JS y sin "reducir movimiento"; se marca antes del primer pintado -->
+    <script is:inline>
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim');
+    </script>
+    {!noindex && <link rel="canonical" href={canonicalUrl} />}
+    {!noindex && <link rel="alternate" hreflang="es-MX" href={canonicalUrl} />}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={canonicalUrl} />}
+
+    <!-- Tipografías propias: se precargan las del primer pantallazo -->
+    <link rel="preload" href="/fonts/cormorant-garamond-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Íconos y manifest -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <!-- Identidad verificable: une este dominio con cada perfil oficial y con bydan.art -->
+    <link rel="me" href="https://bydan.art" />
+    {officialProfiles.map((url) => <link rel="me" href={url} />)}
+
+    {googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+    {bingVerification && <meta name="msvalidate.01" content={bingVerification} />}
+
+    <!-- Open Graph -->
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:secure_url" content={ogImageUrl} />
+    <meta property="og:image:type" content={ogImageType} />
+    {imageWidth && <meta property="og:image:width" content={String(imageWidth)} />}
+    {imageHeight && <meta property="og:image:height" content={String(imageHeight)} />}
+    <meta property="og:image:alt" content={imageAlt} />
+
+    <!-- X / Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    <script type="application/ld+json" set:html={jsonLdString(structuredData)} />
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <a href="#contenido" class="skip-link">Saltar al contenido</a>
+    <slot />
+
+    <!-- Aparición al entrar en pantalla (reemplaza a AOS: mismo efecto, sin librería externa) -->
+    <script is:inline>
+      (() => {
+        const els = Array.from(document.querySelectorAll('[data-aos]'));
+        els.forEach((el) => {
+          const d = el.getAttribute('data-aos-delay');
+          const t = el.getAttribute('data-aos-duration');
+          if (d) el.style.setProperty('--aos-delay', d + 'ms');
+          if (t) el.style.setProperty('--aos-duration', t + 'ms');
+        });
+        if (!document.documentElement.classList.contains('anim')) return;
+        if (!('IntersectionObserver' in window)) {
+          els.forEach((el) => el.classList.add('aos-animate'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (!e.isIntersecting) return;
+              e.target.classList.add('aos-animate');
+              io.unobserve(e.target);
+            });
+          },
+          { rootMargin: '0px 0px -30px 0px' }
+        );
+        els.forEach((el) => io.observe(el));
+      })();
+    </script>
+  </body>
+</html>

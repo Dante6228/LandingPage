@@ -1,0 +1,44 @@
+---
+// Widget de conciertos de Bandsintown. Su script (de terceros) solo se descarga cuando el pie
+// se acerca a la pantalla: no compite con la carga inicial.
+import { bandsintown } from '../data/site';
+---
+
+<div class="w-full bg-glass-bg backdrop-blur-2xl border border-glass-border shadow-glass rounded-xl p-6 overflow-hidden" id="bit-wrap">
+  <a
+    class="bit-widget-initializer"
+    data-artist-name={bandsintown.artistId}
+    data-background-color="rgba(0,0,0,0)"
+    data-separator-color="rgba(255,255,255,0.1)"
+    data-text-color="#E5E5E0"
+    data-font="Montserrat"
+    data-auto-style="true"
+    data-display-local-dates="true"
+    data-display-past-dates="false"
+    data-display-details="false"
+    data-display-lineup="false"></a>
+</div>
+
+<script>
+  const wrap = document.getElementById('bit-wrap');
+  const load = () => {
+    if (document.querySelector('script[data-bit]')) return;
+    const s = document.createElement('script');
+    s.src = 'https://widgetv3.bandsintown.com/main.min.js';
+    s.charset = 'utf-8';
+    s.async = true;
+    s.dataset.bit = '';
+    document.body.appendChild(s);
+  };
+  if (wrap && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        io.disconnect();
+        load();
+      }
+    }, { rootMargin: '600px 0px' });
+    io.observe(wrap);
+  } else {
+    load();
+  }
+</script>

@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Dust from '../components/Dust.astro';
+---
+
+<BaseLayout
+  title="Página no encontrada | Alen Jeynrod"
+  description="Esta página no existe en el sitio de Alen Jeynrod. Vuelve al inicio para escuchar su música, ver las Live Sessions y conocer Dreaming."
+  noindex
+  bodyClass="font-body antialiased bg-warm-black text-cream overflow-x-hidden"
+>
+  <div class="fixed inset-0 w-full h-full bg-noise opacity-5 -z-10 pointer-events-none" aria-hidden="true"></div>
+  <div class="fixed inset-0 w-full h-full bg-vignette -z-10 pointer-events-none" aria-hidden="true"></div>
+  <Dust />
+
+  <main id="contenido" class="min-h-screen flex flex-col items-center justify-center px-4 text-center">
+    <span class="text-xs tracking-[0.3em] text-cream-dim uppercase">404</span>
+    <h1 class="text-5xl md:text-6xl font-display italic text-cream mt-4">Alen Jeynrod</h1>
+    <p class="text-sm text-cream-dim font-light leading-relaxed mt-6 max-w-xs">Esta página no existe.</p>
+    <a href="/" class="inline-block mt-8 px-6 py-2 border border-cream/20 rounded-full text-xs text-cream hover:bg-cream hover:text-black transition duration-300">Volver al inicio</a>
+  </main>
+</BaseLayout>

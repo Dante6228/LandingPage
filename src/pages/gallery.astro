@@ -1,0 +1,234 @@
+---
+// "Dreaming | The Experience Hub". Antes se armaba con JavaScript en el navegador (Google veía la página vacía);
+// ahora cada pieza sale en el HTML, con las mismas clases y el mismo orden alternado.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Dust from '../components/Dust.astro';
+import { Picture, getImage } from 'astro:assets';
+import { gallery, gallerySongs } from '../data/site';
+import { IDS, SITE, absoluteUrl, albumNode, artistNode, breadcrumbNode, compositionNodes, personRef } from '../data/seo';
+import profileImg from '../assets/img/Profile.jpg';
+
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/img/*.{jpg,png}', { eager: true });
+const asset = (name: string) => {
+  const key = Object.keys(files).find((k) => k.endsWith(`/${name}`));
+  if (!key) throw new Error(`Falta la imagen ${name} en src/assets/img`);
+  return files[key].default;
+};
+
+const background = await getImage({ src: profileImg, width: 1600, format: 'webp', quality: 50 });
+const profileAbs = absoluteUrl((await getImage({ src: profileImg, width: 800, format: 'jpg' })).src);
+const dreamingAbs = absoluteUrl((await getImage({ src: asset('dreaming.jpg'), width: 1200, format: 'jpg' })).src);
+
+// URLs absolutas de cada imagen para los datos estructurados.
+const imageUrls: Record<string, string> = {};
+for (const s of gallerySongs) {
+  imageUrls[s.img] = absoluteUrl((await getImage({ src: asset(s.img), width: 1200, format: 'jpg' })).src);
+}
+
+const pageUrl = `${SITE}/gallery`;
+const collection = {
+  '@type': 'CollectionPage',
+  '@id': `${pageUrl}#webpage`,
+  url: pageUrl,
+  name: 'Dreaming | The Experience Hub',
+  description: 'Dreaming Experience Hub. Un viaje inmersivo a través de las notas y memorias de Alen Jeynrod.',
+  inLanguage: 'es-MX',
+  isPartOf: { '@id': IDS.website },
+  about: { '@id': IDS.album },
+  author: { '@id': IDS.artist },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: gallerySongs.length,
+    itemListElement: gallerySongs.map((s, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@id': `${pageUrl}#pieza-${s.id}` } })),
+  },
+};
+---
+
+<BaseLayout
+  title="Dreaming | The Experience Hub · Alen Jeynrod"
+  description="Dreaming Experience Hub. Un viaje inmersivo a través de las notas y memorias de Alen Jeynrod."
+  ogImage={imageUrls['Portrait.png']}
+  ogImageAlt="Portada de Her, de Dreaming"
+  bodyClass="font-body antialiased bg-[#1a130f] text-cream selection:bg-orange-900/40 selection:text-cream overflow-x-hidden"
+  jsonLd={[
+    collection,
+    artistNode(profileAbs),
+    personRef(),
+    albumNode(dreamingAbs),
+    ...compositionNodes(imageUrls),
+    breadcrumbNode(pageUrl, [
+      { name: 'Alen Jeynrod', url: '/' },
+      { name: 'Dreaming | The Experience Hub', url: '/gallery' },
+    ]),
+  ]}
+>
+  <div
+    class="fixed inset-0 w-full h-full bg-cover bg-center opacity-10 -z-20 sepia-[.4] grayscale blur-[5px]"
+    style={`background-image:url('${background.src}')`}
+    aria-hidden="true"
+  >
+  </div>
+  <div class="fixed inset-0 w-full h-full bg-noise opacity-5 -z-10 pointer-events-none" aria-hidden="true"></div>
+  <Dust variant="gallery" />
+
+  <nav class="fixed top-0 left-0 w-full p-6 z-50 flex justify-between items-center mix-blend-difference" aria-label="Navegación">
+    <a href="/" class="text-xs tracking-[0.2em] uppercase opacity-50 hover:opacity-100 transition">{gallery.navBack}</a>
+    <span class="font-display italic text-lg opacity-80">{gallery.navTitle}</span>
+  </nav>
+
+  <main id="contenido" class="min-h-screen flex flex-col items-center pt-32 pb-20 px-4 sm:px-6">
+    <header class="text-center max-w-2xl mx-auto mb-32" data-aos="fade-down" data-aos-duration="1500">
+      <span class="text-xs tracking-[0.5em] text-cream/30 uppercase mb-4 block">{gallery.kicker}</span>
+      <h1 class="text-6xl md:text-8xl font-display italic text-cream mb-8">{gallery.title}</h1>
+      <p class="text-sm md:text-base text-cream-dim font-light leading-loose">{gallery.intro}</p>
+      <div class="w-px h-24 bg-gradient-to-b from-cream/20 to-transparent mx-auto mt-12"></div>
+    </header>
+
+    <div id="gallery-container" class="w-full max-w-5xl space-y-40">
+      {gallerySongs.map((song, index) => {
+        const isEven = index % 2 === 0;
+        const rowClass = isEven ? 'md:flex-row' : 'md:flex-row-reverse';
+        const textClass = isEven ? 'text-center md:text-left' : 'text-center md:text-right';
+        const paddingClass = isEven ? 'md:pl-16' : 'md:pr-16';
+        const lineClass = isEven ? 'md:mr-auto md:ml-0' : 'md:ml-auto md:mr-0';
+        const numPosition = isEven
+          ? 'left-0 right-0 md:left-[-2.5rem] md:right-auto text-center md:text-left'
+          : 'left-0 right-0 md:left-auto md:right-[-2.5rem] text-center md:text-right';
+        const isScore = song.type === 'score';
+        return (
+          <Fragment>
+            <article class="song-station relative group" data-aos="fade-up">
+              <div class={`absolute top-[-3rem] md:top-0 text-6xl md:text-[10rem] font-display text-white/[0.03] md:text-white/[0.02] -z-10 select-none ${numPosition}`} aria-hidden="true">
+                {song.id}
+              </div>
+
+              <div class={`flex flex-col ${rowClass} gap-8 md:gap-0 items-center`}>
+                <div class="w-full md:w-1/2 flex justify-center items-center">
+                  <div class={isScore ? 'score-card' : 'album-card'}>
+                    <Picture
+                      src={asset(song.img)}
+                      formats={['avif', 'webp']}
+                      widths={[320, 480, 640, 960]}
+                      sizes={isScore ? '(min-width: 768px) 512px, min(320px, 100vw)' : '(min-width: 768px) 496px, min(320px, 100vw)'}
+                      alt={song.title}
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      fetchpriority={index === 0 ? 'high' : 'auto'}
+                      class={isScore ? 'score-img' : 'album-img'}
+                    />
+                  </div>
+                </div>
+
+                <div class={`w-full md:w-1/2 space-y-6 pt-4 ${textClass} ${paddingClass}`}>
+                  <div>
+                    <h2 class="text-4xl font-display text-cream">{song.title}</h2>
+                    {song.subtitle && <span class="text-xs font-display italic text-cream/60 mt-1 block">{song.subtitle}</span>}
+                    <p class="text-xs font-mono text-cream/60 mt-2 tracking-widest uppercase">{song.meta}</p>
+                  </div>
+
+                  <div class={`h-px w-12 bg-cream/20 mx-auto ${lineClass}`}></div>
+
+                  <p class="text-sm text-cream-dim font-light leading-relaxed text-pretty" set:html={song.desc} />
+
+                  {song.capsuleFile && (
+                    <Fragment>
+                      <div class={`flex justify-center ${isEven ? 'md:justify-start' : 'md:justify-end'} pt-4`}>
+                        <button
+                          type="button"
+                          data-capsule={`capsule-${song.id}`}
+                          aria-expanded="false"
+                          aria-controls={`capsule-${song.id}`}
+                          class="capsule-toggle group flex items-center gap-3 text-xs tracking-widest uppercase text-orange-200/60 hover:text-orange-200 transition"
+                        >
+                          <span class="w-8 h-px bg-orange-200/30 group-hover:w-12 transition-all"></span> Abrir Time Capsule
+                        </button>
+                      </div>
+
+                      <div id={`capsule-${song.id}`} class="capsule-content mt-4 text-left">
+                        <div class="bg-white/5 border border-white/10 backdrop-blur-md p-6 relative overflow-hidden">
+                          <div class="absolute inset-0 opacity-40 pointer-events-none" style="background: radial-gradient(circle at 30% 10%, rgba(255,255,255,.08), transparent 60%);"></div>
+                          <div class="relative flex flex-col gap-4">
+                            <audio controls preload="none" class="w-full">
+                              <source src={song.capsuleFile} type="audio/mpeg" />
+                              Tu navegador no soporta audio.
+                            </audio>
+                          </div>
+                        </div>
+                      </div>
+                    </Fragment>
+                  )}
+                </div>
+              </div>
+            </article>
+
+            {index === gallery.quoteAfterIndex && (
+              <div class="w-full max-w-2xl mx-auto text-center py-20 opacity-60 px-4" data-aos="zoom-in">
+                <span class="text-2xl text-cream/20 font-display block mb-4" aria-hidden="true">“</span>
+                <p class="text-xl md:text-2xl font-display italic text-cream leading-relaxed">{gallery.quote}</p>
+                <br />
+                <p class="text-xs text-cream/30">{gallery.quoteAuthor}</p>
+              </div>
+            )}
+          </Fragment>
+        );
+      })}
+    </div>
+
+    <section class="w-full max-w-3xl mx-auto text-center py-32 border-b border-white/5 px-4" data-aos="fade-up">
+      <h2 class="text-xs tracking-[0.4em] text-cream/40 uppercase mb-12">{gallery.creditsTitle}</h2>
+      <div class="space-y-8 font-light text-cream-dim text-sm leading-loose">
+        <p>
+          Quisiera agradecer a todas las personas que hicieron posible la creación de todas estas piezas.
+          <br class="hidden md:block" />
+          <span class="italic text-cream/60">"Si no fuese por ustedes, estas canciones no estarían aquí."</span>
+        </p>
+        <p>
+          También me gustaría agradecer a todas las personas que desde un inicio me apoyaron en este sueño.
+          Es un honor para mí el poder presentarles esto.
+        </p>
+        <div class="pt-8">
+          <p class="text-xs text-cream/30 uppercase tracking-widest mb-2">Creado, imaginado y producido por</p>
+          <p class="text-2xl font-display text-cream">Alen Jeynrod</p>
+        </div>
+      </div>
+    </section>
+
+    {gallery.guestbook.visible && (
+      <section class="w-full max-w-2xl mt-20 mb-20 pt-20 px-4" data-aos="zoom-in">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl font-display italic text-cream">{gallery.guestbook.title}</h2>
+          <p class="text-sm text-cream/50 mt-2 font-light">{gallery.guestbook.text}</p>
+        </div>
+        <!-- Pendiente: conectar a un servicio (antes usaba data-netlify="true", que no funciona en Cloudflare). -->
+        <form name="guestbook" method="POST" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <input type="text" name="name" placeholder="Tu Nombre" aria-label="Tu Nombre" class="bg-white/5 border border-white/10 rounded-none px-4 py-3 text-sm text-cream placeholder-cream/20 focus:outline-none focus:border-cream/40 transition" />
+            <input type="text" name="location" placeholder="Ciudad / País" aria-label="Ciudad / País" class="bg-white/5 border border-white/10 rounded-none px-4 py-3 text-sm text-cream placeholder-cream/20 focus:outline-none focus:border-cream/40 transition" />
+          </div>
+          <textarea name="message" rows="4" placeholder="¿Qué sentiste al escuchar Dreaming?" aria-label="Mensaje" class="w-full bg-white/5 border border-white/10 rounded-none px-4 py-3 text-sm text-cream placeholder-cream/20 focus:outline-none focus:border-cream/40 transition resize-none"></textarea>
+          <div class="text-center">
+            <button type="submit" class="px-8 py-3 bg-cream text-warm-black font-display italic text-sm hover:bg-white transition duration-500 tracking-widest">Guardar Nota</button>
+          </div>
+        </form>
+      </section>
+    )}
+  </main>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.capsule-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const capsule = document.getElementById(btn.dataset.capsule || '');
+      if (!capsule) return;
+      document.querySelectorAll('.capsule-content').forEach((el) => {
+        if (el !== capsule) {
+          el.classList.remove('capsule-open');
+          el.querySelectorAll('audio').forEach((a) => { a.pause(); a.currentTime = 0; });
+        }
+      });
+      const willClose = capsule.classList.contains('capsule-open');
+      capsule.classList.toggle('capsule-open');
+      btn.setAttribute('aria-expanded', String(!willClose));
+      if (willClose) capsule.querySelectorAll('audio').forEach((a) => { a.pause(); a.currentTime = 0; });
+    });
+  });
+</script>

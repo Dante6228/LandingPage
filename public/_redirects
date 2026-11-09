@@ -1,0 +1,4 @@
+# Redirecciones 301 (mantener en sincronía con `redirects` de astro.config.mjs).
+# URLs del sitio anterior en HTML estático:
+/index.html             /          301
+/gallery/index.html     /gallery   301

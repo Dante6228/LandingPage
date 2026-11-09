@@ -1,30 +1,29 @@
-# 🎵 Landing Page de Alen Jeynrod  
+# Alen Jeynrod — alenjeynrod.com
 
-Esta landing page tiene como objetivo centralizar todos los enlaces donde puedes escuchar la música de **Alen Jeynrod**, así como facilitar el acceso a sus redes sociales.  
+Sitio oficial de **Alen Jeynrod**, pianista y compositor: enlaces para escuchar su música, *Dreaming*, Live Sessions, último lanzamiento, vinilo, la historia del artista, redes y conciertos. Incluye la galería "Dreaming | The Experience Hub" (`/gallery`).
 
-## 🚀 Secciones  
+## Desarrollo
 
-### 🔹 Sección Principal  
-En esta parte encontrarás botones que te llevarán directamente a las principales plataformas de streaming donde puedes escuchar la música del artista. Se priorizan las más populares para facilitar el acceso.  
+```bash
+npm install
+npm run dev       # servidor local
+npm run build     # build estático a dist/
+npm run preview   # sirve dist/ (aquí se audita con Lighthouse)
+```
 
-### 🔹 Footer  
-El pie de página contiene dos elementos clave:  
-- 📝 **Breve historia del artista**: Un fragmento sobre su trayectoria y sus influencias musicales.  
-- 📲 **Redes Sociales**: Botones para seguir a Alen Jeynrod en **TikTok, YouTube e Instagram**.  
+- Contenido: `src/data/site.ts` (todos los textos y enlaces).
+- SEO y datos estructurados: `src/data/seo.ts`.
+- Imagen para redes: `node scripts/generate-social-images.mjs`.
 
-### DESPLIEGUE
-- El comando para tailwind es: npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
+## Tecnologías
 
-## 🛠️ Tecnologías Utilizadas  
-Este proyecto fue desarrollado con:  
-- ⚡ [Tailwind CSS 3.4.17](https://v3.tailwindcss.com/)  
-- 📄 [Awesome README](https://github.com/matiassingers/awesome-readme)  
-- 🖥️ **HTML**  
+Astro 5 (sitio estático) · Tailwind CSS 4 · TypeScript · Cloudflare Workers (recursos estáticos).
 
-## 🌍 Despliegue  
-El sitio web ha sido desplegado en **Netlify** y está disponible en el siguiente enlace:  
-🔗 [alenjeynrod.netlify.app](https://alenjeynrod.netlify.app/)  
+## Despliegue
 
-## 👤 Autor  
-📌 **Dante**  
-- GitHub: [@dante6228](https://www.github.com/dante6228)  
+Cloudflare Workers con `wrangler.jsonc`: cada push a `main` se publica en https://alenjeynrod.com.
+Arquitectura gemela de https://bydan.art. Detalles en `CLAUDE.md` y `docs/REGISTRO.md`.
+
+## Autor
+
+Dante Alejandro Viveros Rodríguez — [bydan.art](https://bydan.art) · GitHub [@dante6228](https://www.github.com/dante6228)

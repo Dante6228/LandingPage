@@ -1,0 +1,52 @@
+---
+// Botón de "Atmósfera": sonido ambiental en bucle al 20 % de volumen. El MP3 (11 MB) no se descarga
+// hasta que alguien lo activa (preload="none").
+---
+
+<audio id="ambient-sound" loop preload="none">
+  <source src="/audio/ambience.mp3" type="audio/mpeg" />
+</audio>
+
+<button
+  id="audio-toggle"
+  type="button"
+  aria-label="Activar Atmósfera"
+  aria-pressed="false"
+  class="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-glass-bg border border-glass-border shadow-glass backdrop-blur-md text-cream/50 hover:text-cream hover:scale-110 transition-all duration-500 group"
+>
+  <div class="relative w-6 h-6 flex items-center justify-center">
+    <svg id="icon-off" class="w-5 h-5 absolute transition-opacity duration-300 opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
+    </svg>
+    <svg id="icon-on" class="w-5 h-5 absolute transition-opacity duration-300 opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+    </svg>
+  </div>
+</button>
+
+<script>
+  const audioBtn = document.getElementById('audio-toggle');
+  const audioTrack = document.getElementById('ambient-sound') as HTMLAudioElement | null;
+  const iconOff = document.getElementById('icon-off');
+  const iconOn = document.getElementById('icon-on');
+
+  if (audioTrack && audioBtn && iconOff && iconOn) {
+    audioTrack.volume = 0.2;
+    audioBtn.addEventListener('click', () => {
+      if (audioTrack.paused) {
+        audioTrack.play();
+        iconOff.classList.replace('opacity-100', 'opacity-0');
+        iconOn.classList.replace('opacity-0', 'opacity-100');
+        audioBtn.classList.add('border-cream/40');
+        audioBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        audioTrack.pause();
+        iconOff.classList.replace('opacity-0', 'opacity-100');
+        iconOn.classList.replace('opacity-100', 'opacity-0');
+        audioBtn.classList.remove('border-cream/40');
+        audioBtn.setAttribute('aria-pressed', 'false');
+      }
+    });
+  }
+</script>

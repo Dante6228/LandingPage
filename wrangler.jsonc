@@ -1,0 +1,14 @@
+// Cloudflare Workers (recursos estáticos): sirve el build de Astro tal cual, sin código de servidor.
+// Respeta public/_headers (seguridad y caché) y public/_redirects (301).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "alenjeynrod",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    // /gallery sirve gallery.html; sin barra final, igual que canonicalUrl() y el sitemap.
+    "html_handling": "drop-trailing-slash",
+    // Rutas inexistentes: dist/404.html con estado 404.
+    "not_found_handling": "404-page"
+  }
+}
